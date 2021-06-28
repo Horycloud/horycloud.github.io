@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ArrayList - Hugo DPSG</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="ArrayList" />
+<meta property="og:description" content="The main purpose of this article is to make sure that all basic HTML Elements are decorated with CSS so as to not miss any possible elements when creating new themes for Hugo." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://horycloud.github.io/post/arraylist/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-06-27T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-06-27T00:00:00&#43;00:00" />
+
+
+		<meta itemprop="name" content="ArrayList">
+<meta itemprop="description" content="The main purpose of this article is to make sure that all basic HTML Elements are decorated with CSS so as to not miss any possible elements when creating new themes for Hugo."><meta itemprop="datePublished" content="2021-06-27T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-27T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1163">
+<meta itemprop="keywords" content="Java,source," />
+		<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ArrayList"/>
+<meta name="twitter:description" content="The main purpose of this article is to make sure that all basic HTML Elements are decorated with CSS so as to not miss any possible elements when creating new themes for Hugo."/>
+
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="https://horycloud.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo logo--mixed">
+		<div class="container">
+			<a class="logo__link" href="/" title="HORY BLOG" rel="home">
+				<div class="logo__item logo__imagebox">
+						<img class="logo__img" src="/img/placeholder.png">
+					</div><div class="logo__item logo__text">
+						<div class="logo__title">HORY BLOG</div>
+						<div class="logo__tagline">Welcome to my site</div>
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+
+<nav class="menu">
+	<div class="container">
+		<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+			<span class="menu__btn-title" tabindex="-1">Menu</span>
+		</button>
+		<ul class="menu__list">
+			<li class="menu__item">
+				<a class="menu__link" href="/">
+					
+					<span class="menu__text">Home</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="/about/">
+					
+					<span class="menu__text">About</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://gitee.com/HoryCloud">
+					
+					<span class="menu__text">Gitee</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://github.com/Horycloud">
+					
+					<span class="menu__text">GitHub</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://blog.csdn.net/weixin_44471490">
+					
+					<span class="menu__text">CSDN</span>
+					
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">ArrayList</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Hory</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-06-27T00:00:00Z">27.06.2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java-collection/" rel="category">Java Collection</a>
+	</span>
+</div></div>
+		</header>
+		<figure class="post__thumbnail">
+			<img src="/img/placeholder.png" alt="ArrayList">
+		</figure>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#arraylist">ArrayList</a>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+        <li><a href="#类定义">类定义</a></li>
+        <li><a href="#字段属性">字段属性</a></li>
+        <li><a href="#构造函数">构造函数</a></li>
+        <li><a href="#添加元素">添加元素</a></li>
+        <li><a href="#删除元素">删除元素</a></li>
+        <li><a href="#修改元素">修改元素</a></li>
+        <li><a href="#查找元素">查找元素</a></li>
+        <li><a href="#遍历集合">遍历集合</a></li>
+        <li><a href="#sublist">SubList</a></li>
+        <li><a href="#trimtosize">trimToSize()</a></li>
+        <li><a href="#使用">使用</a></li>
+        <li><a href="#arraylist_sort">Arraylist_sort</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p>The main purpose of this article is to make sure that all basic HTML Elements are decorated with CSS so as to not miss any possible elements when creating new themes for Hugo.</p>
+<h2 id="arraylist">ArrayList</h2>
+<p><a href="https://docs.oracle.com/javase/8/docs/api/java/util/ArrayList.html#">官方文档</a></p>
+<h3 id="简介">简介</h3>
+<p>ArrayList是实现 List 接口的实现类，内部是一个大小可变的数组。</p>
+<p>ArrayList 是一个用数组实现的集合，支持随机访问，元素有序且可以重复。</p>
+<p>ArrayList 的好处是可以不用限定容器的大小，它会根据元素的增加而扩容。但是存储进去的数据类型都会变成<code>Object</code>类型，虽然每个元素有自己的<code>index</code>，但不像数组的下标可以更加方便的操作。</p>
+<h3 id="类定义">类定义</h3>
+<p><strong><code>ArrayList</code>定义如下</strong>：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">ArrayList</span><span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">extends</span> AbstractList<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span>
+        <span style="color:#66d9ef">implements</span> List<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;,</span> RandomAccess<span style="color:#f92672">,</span> Cloneable<span style="color:#f92672">,</span> java<span style="color:#f92672">.</span><span style="color:#a6e22e">io</span><span style="color:#f92672">.</span><span style="color:#a6e22e">Serializable</span>
+</code></pre></div><ol>
+<li><strong>实现 RandomAccess 接口</strong></li>
+</ol>
+<p>这是一个标记接口，一般此标记接口用于 <code>List </code>实现，以表明它们支持快速（通常是恒定时间）的随机访问。该接口的主要目的是允许通过算法改变其行为，以便在应用于随机或顺序访问列表时提供良好的性能。</p>
+<p>比如在工具类<code>Collections</code>中，应用二分查找方法时判断是否实现了<code>RandomAccess</code>接口。</p>
+<ol start="2">
+<li><strong>实现 Cloneable 接口</strong></li>
+</ol>
+<p>这个类是 <code>java.lang.Cloneable</code>，前面我们讲解<a href="http://www.cnblogs.com/ysocean/p/8482979.html">深拷贝和浅拷贝</a>的原理时，我们介绍了浅拷贝可以通过调用 <code>Object.clone()</code> 方法来实现，但是调用该方法的对象必须要实现 Cloneable 接口，否则会抛出 <code>CloneNoSupportException</code>异常。</p>
+<p>Cloneable 和 RandomAccess 接口一样也是一个标记接口，接口内无任何方法体和常量的声明，也就是说如果想克隆对象，必须要实现 Cloneable 接口，表明该类是可以被克隆的。</p>
+<ol start="3">
+<li><strong>实现 Serializable 接口</strong></li>
+</ol>
+<p>也是标记接口，表示能被序列化。</p>
+<ol start="4">
+<li><strong>实现 List 接口</strong></li>
+</ol>
+<p>这个接口是 List 类集合的上层接口，定义了实现该接口的类都必须要实现的一组方法，如下所示，下面我们会对这一系列方法的实现做详细介绍。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">interface</span> <span style="color:#a6e22e">List</span><span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> <span style="color:#66d9ef">extends</span> Collection<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">size</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">isEmpty</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">contains</span><span style="color:#f92672">(</span>Object o<span style="color:#f92672">);</span>
+    Iterator<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">iterator</span><span style="color:#f92672">();</span>
+    Object<span style="color:#f92672">[]</span> <span style="color:#a6e22e">toArray</span><span style="color:#f92672">();</span>
+    <span style="color:#f92672">&lt;</span>T<span style="color:#f92672">&gt;</span> T<span style="color:#f92672">[]</span> <span style="color:#a6e22e">toArray</span><span style="color:#f92672">(</span>T<span style="color:#f92672">[]</span> a<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>E e<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span>Object o<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">containsAll</span><span style="color:#f92672">(</span>Collection<span style="color:#f92672">&lt;?&gt;</span> c<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">addAll</span><span style="color:#f92672">(</span>Collection<span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">extends</span> E<span style="color:#f92672">&gt;</span> c<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">addAll</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">,</span> Collection<span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">extends</span> E<span style="color:#f92672">&gt;</span> c<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">removeAll</span><span style="color:#f92672">(</span>Collection<span style="color:#f92672">&lt;?&gt;</span> c<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">retainAll</span><span style="color:#f92672">(</span>Collection<span style="color:#f92672">&lt;?&gt;</span> c<span style="color:#f92672">);</span>
+  
+    <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">replaceAll</span><span style="color:#f92672">(</span>UnaryOperator<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> operator<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Objects<span style="color:#f92672">.</span><span style="color:#a6e22e">requireNonNull</span><span style="color:#f92672">(</span>operator<span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">final</span> ListIterator<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> li <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">listIterator</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">while</span> <span style="color:#f92672">(</span>li<span style="color:#f92672">.</span><span style="color:#a6e22e">hasNext</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+            li<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>operator<span style="color:#f92672">.</span><span style="color:#a6e22e">apply</span><span style="color:#f92672">(</span>li<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">()));</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#a6e22e">@SuppressWarnings</span><span style="color:#f92672">({</span><span style="color:#e6db74">&#34;unchecked&#34;</span><span style="color:#f92672">,</span> <span style="color:#e6db74">&#34;rawtypes&#34;</span><span style="color:#f92672">})</span>
+    <span style="color:#66d9ef">default</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">sort</span><span style="color:#f92672">(</span>Comparator<span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">super</span> E<span style="color:#f92672">&gt;</span> c<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Object<span style="color:#f92672">[]</span> a <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">toArray</span><span style="color:#f92672">();</span>
+        Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">sort</span><span style="color:#f92672">(</span>a<span style="color:#f92672">,</span> <span style="color:#f92672">(</span>Comparator<span style="color:#f92672">)</span> c<span style="color:#f92672">);</span>
+        ListIterator<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> i <span style="color:#f92672">=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">listIterator</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span>Object e <span style="color:#f92672">:</span> a<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+            i<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">();</span>
+            i<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">((</span>E<span style="color:#f92672">)</span> e<span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">clear</span><span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>Object o<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">hashCode</span><span style="color:#f92672">();</span>
+    E <span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">);</span>
+    E <span style="color:#a6e22e">set</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">,</span> E element<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">,</span> E element<span style="color:#f92672">);</span>
+    E <span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">indexOf</span><span style="color:#f92672">(</span>Object o<span style="color:#f92672">);</span>
+    <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">lastIndexOf</span><span style="color:#f92672">(</span>Object o<span style="color:#f92672">);</span>
+    ListIterator<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">listIterator</span><span style="color:#f92672">();</span>
+    ListIterator<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">listIterator</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">);</span>
+    List<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">subList</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> fromIndex<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> toIndex<span style="color:#f92672">);</span>
+
+    <span style="color:#a6e22e">@Override</span>
+    <span style="color:#66d9ef">default</span> Spliterator<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">spliterator</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">return</span> Spliterators<span style="color:#f92672">.</span><span style="color:#a6e22e">spliterator</span><span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> Spliterator<span style="color:#f92672">.</span><span style="color:#a6e22e">ORDERED</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="字段属性">字段属性</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">long</span> serialVersionUID <span style="color:#f92672">=</span> 8683452581122892189L<span style="color:#f92672">;</span>
+
+<span style="color:#75715e">// 集合默认大小
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> <span style="color:#66d9ef">int</span> DEFAULT_CAPACITY <span style="color:#f92672">=</span> 10<span style="color:#f92672">;</span>  
+
+<span style="color:#75715e">// Object类型的空数组实例
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Object<span style="color:#f92672">[]</span> EMPTY_ELEMENTDATA <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+
+<span style="color:#75715e">// 这也是一个空的数组实例，和 EMPTY_ELEMENTDATA 空数组相比是用于了解添加元素时数组膨胀多少
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">final</span> Object<span style="color:#f92672">[]</span> DEFAULTCAPACITY_EMPTY_ELEMENTDATA <span style="color:#f92672">=</span> <span style="color:#f92672">{};</span>
+
+<span style="color:#75715e">// 用来存储 ArrayList 集合的元素，集合的长度即这个数组的长度
+</span><span style="color:#75715e"></span><span style="color:#66d9ef">transient</span> Object<span style="color:#f92672">[]</span> elementData<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">int</span> size<span style="color:#f92672">;</span>
+</code></pre></div><h3 id="构造函数">构造函数</h3>
+<blockquote>
+<p><strong>无参构造函数</strong></p>
+</blockquote>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ArrayList</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  	<span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">elementData</span> <span style="color:#f92672">=</span> DEFAULTCAPACITY_EMPTY_ELEMENTDATA<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>此无参构造函数将创建一个 <code>DEFAULTCAPACITY_EMPTY_ELEMENTDATA</code> 声明的数组，注意此时初始容量是<code>0</code>，而不是 <code>10</code>。</p>
+<ul>
+<li>注意：根据默认构造函数创建的集合 <code>ArrayList list = new ArrayList();</code>此时集合长度是0。</li>
+</ul>
+<blockquote>
+<p><strong>初始化集合大小构造函数</strong></p>
+</blockquote>
+<p>当大于0时，给定多少那就创建多大的数组；当等于0时，创建一个空数组；当小于0时，抛出异常。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ArrayList</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> initialCapacity<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>initialCapacity <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      	<span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">elementData</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Object<span style="color:#f92672">[</span>initialCapacity<span style="color:#f92672">];</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>initialCapacity <span style="color:#f92672">==</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      	<span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">elementData</span> <span style="color:#f92672">=</span> EMPTY_ELEMENTDATA<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+      	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalArgumentException<span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Illegal Capacity: &#34;</span><span style="color:#f92672">+</span>
+                                         initialCapacity<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p><strong>传入一个集合的构造函数</strong></p>
+</blockquote>
+<p>当我们想将一个集合转化为<code>ArraList</code>，可用此构造函数：</p>
+<ul>
+<li>将已有的集合复制到 ArrayList 集合中去</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#a6e22e">ArrayList</span><span style="color:#f92672">(</span>Collection<span style="color:#f92672">&lt;?</span> <span style="color:#66d9ef">extends</span> E<span style="color:#f92672">&gt;</span> c<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    elementData <span style="color:#f92672">=</span> c<span style="color:#f92672">.</span><span style="color:#a6e22e">toArray</span><span style="color:#f92672">();</span>   <span style="color:#75715e">// Object[] toArray();
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">((</span>size <span style="color:#f92672">=</span> elementData<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span> <span style="color:#f92672">!=</span> 0<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    		<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>elementData<span style="color:#f92672">.</span><span style="color:#a6e22e">getClass</span><span style="color:#f92672">()</span> <span style="color:#f92672">!=</span> Object<span style="color:#f92672">[].</span><span style="color:#a6e22e">class</span><span style="color:#f92672">)</span>
+          	elementData <span style="color:#f92672">=</span> Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">copyOf</span><span style="color:#f92672">(</span>elementData<span style="color:#f92672">,</span> size<span style="color:#f92672">,</span> Object<span style="color:#f92672">[].</span><span style="color:#a6e22e">class</span><span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">elementData</span> <span style="color:#f92672">=</span> EMPTY_ELEMENTDATA<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="添加元素">添加元素</h3>
+<blockquote>
+<p><strong>源码分析</strong></p>
+</blockquote>
+<p>ArrayList 集合是由数组构成的，那么向 ArrayList 中添加元素，也就是向数组赋值。一个数组的声明大小是固定的，而使用 ArrayList 时，能添加任意多个元素，这就涉及到数组的扩容。</p>
+<p>扩容的核心方法就是调用<code>Arrays.copyOf</code>方法，创建一个更大的数组，然后将原数组元素拷贝过去即可。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>E e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    ensureCapacityInternal<span style="color:#f92672">(</span>size <span style="color:#f92672">+</span> 1<span style="color:#f92672">);</span>  <span style="color:#75715e">// 确定集合的大小，如果集合满了，则要进行扩容操作
+</span><span style="color:#75715e"></span>    elementData<span style="color:#f92672">[</span>size<span style="color:#f92672">++]</span> <span style="color:#f92672">=</span> e<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ensureCapacityInternal</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> minCapacity<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+  	ensureExplicitCapacity<span style="color:#f92672">(</span>calculateCapacity<span style="color:#f92672">(</span>elementData<span style="color:#f92672">,</span> minCapacity<span style="color:#f92672">));</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">ensureExplicitCapacity</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> minCapacity<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    modCount<span style="color:#f92672">++;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>minCapacity <span style="color:#f92672">-</span> elementData<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span>
+      	grow<span style="color:#f92672">(</span>minCapacity<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">calculateCapacity</span><span style="color:#f92672">(</span>Object<span style="color:#f92672">[]</span> elementData<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> minCapacity<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>elementData <span style="color:#f92672">==</span> DEFAULTCAPACITY_EMPTY_ELEMENTDATA<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      	<span style="color:#66d9ef">return</span> Math<span style="color:#f92672">.</span><span style="color:#a6e22e">max</span><span style="color:#f92672">(</span>DEFAULT_CAPACITY<span style="color:#f92672">,</span> minCapacity<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+  	<span style="color:#66d9ef">return</span> minCapacity<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>在 <code>ensureExplicitCapacity</code> 方法中，首先对修改次数<code>modCount</code>加1，这里的modCount给ArrayList的迭代器使用的，在并发操作被修改时，提供快速失败行为（保证modCount在迭代期间不变，否则抛出ConcurrentModificationException异常，可以查看源码865行）</p>
+<p>接着判断<code>minCapacity</code>是否大于当前ArrayList内部数组长度，大于的话调用<code>grow</code>方法对内部数组elementData扩容，grow方法代码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">grow</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> minCapacity<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">int</span> oldCapacity <span style="color:#f92672">=</span> elementData<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">int</span> newCapacity <span style="color:#f92672">=</span> oldCapacity <span style="color:#f92672">+</span> <span style="color:#f92672">(</span>oldCapacity <span style="color:#f92672">&gt;&gt;</span> 1<span style="color:#f92672">);</span> <span style="color:#75715e">// 扩容1.5倍
+</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>newCapacity <span style="color:#f92672">-</span> minCapacity <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span>
+      	newCapacity <span style="color:#f92672">=</span> minCapacity<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>newCapacity <span style="color:#f92672">-</span> MAX_ARRAY_SIZE <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span>
+      	newCapacity <span style="color:#f92672">=</span> hugeCapacity<span style="color:#f92672">(</span>minCapacity<span style="color:#f92672">);</span>
+    elementData <span style="color:#f92672">=</span> Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">copyOf</span><span style="color:#f92672">(</span>elementData<span style="color:#f92672">,</span> newCapacity<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+
+<span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">hugeCapacity</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> minCapacity<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>minCapacity <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span> <span style="color:#75715e">// overflow
+</span><span style="color:#75715e"></span>      	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> OutOfMemoryError<span style="color:#f92672">();</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">(</span>minCapacity <span style="color:#f92672">&gt;</span> MAX_ARRAY_SIZE<span style="color:#f92672">)</span> <span style="color:#f92672">?</span>
+      	Integer<span style="color:#f92672">.</span><span style="color:#a6e22e">MAX_VALUE</span> <span style="color:#f92672">:</span>
+    MAX_ARRAY_SIZE<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p><strong>总结</strong></p>
+</blockquote>
+<ol>
+<li>当通过 ArrayList() 构造一个空集合，初始长度是为0的，第 1 次添加元素，会创建一个长度为10的数组，并将该元素赋值到数组的第一个位置。</li>
+<li>第 2 次添加元素，集合不为空，而且由于集合的长度size+1是小于数组的长度10，所以直接添加元素到数组的第二个位置，不用扩容。</li>
+<li>第 11 次添加元素，此时 size+1 = 11，而数组长度是10，这时候创建一个长度为10+10*0.5 = 15 的数组（扩容1.5倍），然后将原数组元素引用拷贝到新数组。并将第 11 次添加的元素赋值到新数组下标为10的位置。</li>
+<li>Integer.MAX_VALUE - 8 = 2147483639（21亿多），然后第  2147483639/1.5=1431655759（14亿多，这个数是要进行扩容） 次添加元素，为了防止溢出，此时会直接创建一个 1431655759+1 大小的数组，这样一直，每次添加一个元素，都只扩大一个范围。
+<ul>
+<li>即第14.31655759亿次添加元素时，它的1.5倍就基本是Integer.MAX_VALUE了，就不能再以1.5倍扩容了，而是每次只扩大一个范围。</li>
+</ul>
+</li>
+<li>第 Integer.MAX_VALUE - 7 次添加元素时，创建一个大小为 Integer.MAX_VALUE 的数组，再进行元素添加。</li>
+<li>第 Integer.MAX_VALUE + 1 次添加元素时，抛出 OutOfMemoryError 异常。</li>
+</ol>
+<p><strong>注意</strong>：是可以向集合中添加 null 的，因为数组可以有 null 值存在。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">Object<span style="color:#f92672">[]</span> obj <span style="color:#f92672">=</span> <span style="color:#f92672">{</span><span style="color:#66d9ef">null</span><span style="color:#f92672">,</span>1<span style="color:#f92672">};</span>
+
+ArrayList list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">null</span><span style="color:#f92672">);</span>
+list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>
+System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>list<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">());</span> <span style="color:#75715e">// 2
+</span></code></pre></div><h3 id="删除元素">删除元素</h3>
+<blockquote>
+<p><strong>根据索引删除元素</strong></p>
+</blockquote>
+<p><code>remove(int index)</code> 方法表示删除索引<code>index</code>处的元素，首先通过 <code>rangeCheck(index)</code> 方法判断给定索引的范围，超过集合大小则抛出异常；接着通过 <code>System.arraycopy</code> 方法对数组进行自身<code>拷贝</code>。</p>
+<p>源码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    rangeCheck<span style="color:#f92672">(</span>index<span style="color:#f92672">);</span>
+
+    modCount<span style="color:#f92672">++;</span>
+    E oldValue <span style="color:#f92672">=</span> elementData<span style="color:#f92672">(</span>index<span style="color:#f92672">);</span>
+
+    <span style="color:#66d9ef">int</span> numMoved <span style="color:#f92672">=</span> size <span style="color:#f92672">-</span> index <span style="color:#f92672">-</span> 1<span style="color:#f92672">;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>numMoved <span style="color:#f92672">&gt;</span> 0<span style="color:#f92672">)</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">arraycopy</span><span style="color:#f92672">(</span>elementData<span style="color:#f92672">,</span> index<span style="color:#f92672">+</span>1<span style="color:#f92672">,</span> elementData<span style="color:#f92672">,</span> index<span style="color:#f92672">,</span>
+                       numMoved<span style="color:#f92672">);</span>
+    elementData<span style="color:#f92672">[--</span>size<span style="color:#f92672">]</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">;</span> <span style="color:#75715e">// clear to let GC do its work
+</span><span style="color:#75715e"></span>
+    <span style="color:#66d9ef">return</span> oldValue<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p><strong>直接删除指定元素</strong></p>
+</blockquote>
+<p><code>remove(Object o)</code>方法是删除数组中从前往后第一次出现的该元素。然后通过<code>System.arraycopy</code>进行数组自身拷贝。</p>
+<p>源码如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">boolean</span> <span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span>Object o<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>o <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> index <span style="color:#f92672">&lt;</span> size<span style="color:#f92672">;</span> index<span style="color:#f92672">++)</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>elementData<span style="color:#f92672">[</span>index<span style="color:#f92672">]</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+                fastRemove<span style="color:#f92672">(</span>index<span style="color:#f92672">);</span>
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> index <span style="color:#f92672">&lt;</span> size<span style="color:#f92672">;</span> index<span style="color:#f92672">++)</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>o<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>elementData<span style="color:#f92672">[</span>index<span style="color:#f92672">]))</span> <span style="color:#f92672">{</span>
+                fastRemove<span style="color:#f92672">(</span>index<span style="color:#f92672">);</span>
+                <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">true</span><span style="color:#f92672">;</span>
+            <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">false</span><span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="修改元素">修改元素</h3>
+<p>通过调用 <code>set(int index, E element)</code> 方法在指定索引 index 处的元素替换为 element。并返回原数组的元素。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>E e<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>lastRet <span style="color:#f92672">&lt;</span> 0<span style="color:#f92672">)</span>
+      	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IllegalStateException<span style="color:#f92672">();</span>
+    checkForComodification<span style="color:#f92672">();</span>
+
+    <span style="color:#66d9ef">try</span> <span style="color:#f92672">{</span>
+      	ArrayList<span style="color:#f92672">.</span><span style="color:#a6e22e">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>lastRet<span style="color:#f92672">,</span> e<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">catch</span> <span style="color:#f92672">(</span>IndexOutOfBoundsException ex<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      	<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> ConcurrentModificationException<span style="color:#f92672">();</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>通过调用 <code>rangeCheck(index)</code> 来检查索引合法性。</p>
+<p>当索引为负数时，会抛出 <code>java.lang.ArrayIndexOutOfBoundsException</code> 异常；当索引大于集合长度时，会抛出 <code>IndexOutOfBoundsException</code> 异常。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">private</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">rangeCheck</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+  	<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>index <span style="color:#f92672">&lt;</span> 0 <span style="color:#f92672">||</span> index <span style="color:#f92672">&gt;=</span> <span style="color:#66d9ef">this</span><span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">)</span>
+    		<span style="color:#66d9ef">throw</span> <span style="color:#66d9ef">new</span> IndexOutOfBoundsException<span style="color:#f92672">(</span>outOfBoundsMsg<span style="color:#f92672">(</span>index<span style="color:#f92672">));</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="查找元素">查找元素</h3>
+<blockquote>
+<p><strong>根据索引查找元素</strong></p>
+</blockquote>
+<p>源码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> E <span style="color:#a6e22e">get</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> index<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+  	rangeCheck<span style="color:#f92672">(</span>index<span style="color:#f92672">);</span>
+  	<span style="color:#66d9ef">return</span> elementData<span style="color:#f92672">(</span>index<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><blockquote>
+<p><strong>根据元素查找索引</strong></p>
+</blockquote>
+<p>返回索引是通过遍历整个数组实现的，且返回第一次出现该元素的下标，如果没有则返回 -1</p>
+<p>源码：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">lastIndexOf</span><span style="color:#f92672">(</span>Object o<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>o <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> size<span style="color:#f92672">-</span>1<span style="color:#f92672">;</span> i <span style="color:#f92672">&gt;=</span> 0<span style="color:#f92672">;</span> i<span style="color:#f92672">--)</span>
+          	<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>elementData<span style="color:#f92672">[</span>i<span style="color:#f92672">]==</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+            		<span style="color:#66d9ef">return</span> i<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+      		<span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> size<span style="color:#f92672">-</span>1<span style="color:#f92672">;</span> i <span style="color:#f92672">&gt;=</span> 0<span style="color:#f92672">;</span> i<span style="color:#f92672">--)</span>
+        			<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>o<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>elementData<span style="color:#f92672">[</span>i<span style="color:#f92672">]))</span>
+          				<span style="color:#66d9ef">return</span> i<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>此外， <code>lastIndexOf(Object o)</code> 方法是返回最后一次出现该元素的下标。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">lastIndexOf</span><span style="color:#f92672">(</span>Object o<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>o <span style="color:#f92672">==</span> <span style="color:#66d9ef">null</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> size<span style="color:#f92672">-</span>1<span style="color:#f92672">;</span> i <span style="color:#f92672">&gt;=</span> 0<span style="color:#f92672">;</span> i<span style="color:#f92672">--)</span>
+            <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>elementData<span style="color:#f92672">[</span>i<span style="color:#f92672">]==</span><span style="color:#66d9ef">null</span><span style="color:#f92672">)</span>
+              	<span style="color:#66d9ef">return</span> i<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">{</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> size<span style="color:#f92672">-</span>1<span style="color:#f92672">;</span> i <span style="color:#f92672">&gt;=</span> 0<span style="color:#f92672">;</span> i<span style="color:#f92672">--)</span>
+          	<span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>o<span style="color:#f92672">.</span><span style="color:#a6e22e">equals</span><span style="color:#f92672">(</span>elementData<span style="color:#f92672">[</span>i<span style="color:#f92672">]))</span>
+            		<span style="color:#66d9ef">return</span> i<span style="color:#f92672">;</span>
+    <span style="color:#f92672">}</span>
+    <span style="color:#66d9ef">return</span> <span style="color:#f92672">-</span>1<span style="color:#f92672">;</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>可见<code>lastIndexOf(Object o)</code> 方法是从后往前遍历的。</p>
+<h3 id="遍历集合">遍历集合</h3>
+<ul>
+<li>内容有点多，见<a href="https://www.cnblogs.com/ysocean/p/8622264.html">原文</a></li>
+</ul>
+<ol>
+<li>通过<code>get(int index)</code></li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">for</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0 <span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">()</span> <span style="color:#f92672">;</span> i<span style="color:#f92672">++){</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span>list<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>i<span style="color:#f92672">)+</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><ol start="2">
+<li>迭代器 <code>iterator</code></li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ArrayList<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;();</span>
+<span style="color:#75715e">// 添加元素的步骤省略...
+</span><span style="color:#75715e"></span>Iterator<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> it <span style="color:#f92672">=</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">();</span>
+<span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>it<span style="color:#f92672">.</span><span style="color:#a6e22e">hasNext</span><span style="color:#f92672">()){</span>
+  	String str <span style="color:#f92672">=</span> it<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">();</span>
+  	System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span>str<span style="color:#f92672">+</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><h3 id="sublist">SubList</h3>
+<p>在 ArrayList 中有这样一个方法：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> List<span style="color:#f92672">&lt;</span>E<span style="color:#f92672">&gt;</span> <span style="color:#a6e22e">subList</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> fromIndex<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> toIndex<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+  	subListRangeCheck<span style="color:#f92672">(</span>fromIndex<span style="color:#f92672">,</span> toIndex<span style="color:#f92672">,</span> size<span style="color:#f92672">);</span>
+  	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> SubList<span style="color:#f92672">(</span><span style="color:#66d9ef">this</span><span style="color:#f92672">,</span> 0<span style="color:#f92672">,</span> fromIndex<span style="color:#f92672">,</span> toIndex<span style="color:#f92672">);</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p>作用是返回从 <code>fromIndex(包括)</code> 开始的下标，到 <code>toIndex(不包括)</code> 结束的下标之间的元素<code>视图</code>。如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">ArrayList<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> list <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;();</span>
+list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;a&#34;</span><span style="color:#f92672">);</span>
+list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;b&#34;</span><span style="color:#f92672">);</span>
+list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;c&#34;</span><span style="color:#f92672">);</span>
+list<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;d&#34;</span><span style="color:#f92672">);</span>
+
+List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> subList <span style="color:#f92672">=</span> list<span style="color:#f92672">.</span><span style="color:#a6e22e">subList</span><span style="color:#f92672">(</span>0<span style="color:#f92672">,</span> 1<span style="color:#f92672">);</span>
+<span style="color:#66d9ef">for</span><span style="color:#f92672">(</span>String str <span style="color:#f92672">:</span> subList<span style="color:#f92672">){</span>
+    System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span>str <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">// a b
+</span><span style="color:#75715e"></span><span style="color:#f92672">}</span>
+</code></pre></div><ul>
+<li><code>SubList</code> 类是 ArrayList 中的一个内部类。</li>
+</ul>
+<p>注意：返回的是<code>原集合</code>的视图，也就是说，如果对 subList 出来的集合进行修改或新增操作，那么原始集合也会发生同样的操作。想要独立出来一个集合，解决办法如下：</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java">List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> subList <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;&gt;(</span>list<span style="color:#f92672">.</span><span style="color:#a6e22e">subList</span><span style="color:#f92672">(</span>0<span style="color:#f92672">,</span> 2<span style="color:#f92672">));</span>
+</code></pre></div><h3 id="trimtosize">trimToSize()</h3>
+<p>该方法用于回收多余的内存。trim是修剪的意思，也就是说一旦我们确定集合不再添加多余的元素之后，调用 <code>trimToSize()</code> 方法会将实现集合的数组大小调整为集合元素的大小。</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">trimToSize</span><span style="color:#f92672">()</span> <span style="color:#f92672">{</span>
+  	modCount<span style="color:#f92672">++;</span>
+    <span style="color:#66d9ef">if</span> <span style="color:#f92672">(</span>size <span style="color:#f92672">&lt;</span> elementData<span style="color:#f92672">.</span><span style="color:#a6e22e">length</span><span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+      	elementData <span style="color:#f92672">=</span> Arrays<span style="color:#f92672">.</span><span style="color:#a6e22e">copyOf</span><span style="color:#f92672">(</span>elementData<span style="color:#f92672">,</span> size<span style="color:#f92672">);</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div><p><strong>注意</strong>：该方法会花时间来复制数组元素，所以应该在确定不会添加元素之后再调用。</p>
+<h3 id="使用">使用</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="color:#75715e">// Arraylist
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">import</span> java.util.ArrayList<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Iterator<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.List<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> staffs <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;();</span>
+        List<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> corporation <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;();</span>
+        <span style="color:#75715e">//添加数据
+</span><span style="color:#75715e"></span>        staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;A&#34;</span><span style="color:#f92672">);</span>
+        staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;B&#34;</span><span style="color:#f92672">);</span>
+        staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;C&#34;</span><span style="color:#f92672">);</span>
+        corporation<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;Boss&#34;</span><span style="color:#f92672">);</span>
+
+        <span style="color:#75715e">//在某个位置插入元素，此位置后的元素后移
+</span><span style="color:#75715e"></span>        staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;a&#34;</span><span style="color:#f92672">);</span>
+
+        staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">set</span><span style="color:#f92672">(</span>1<span style="color:#f92672">,</span><span style="color:#e6db74">&#34;2&#34;</span><span style="color:#f92672">);</span>
+        staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>1<span style="color:#f92672">);</span>     <span style="color:#75715e">//获取某位置的元素
+</span><span style="color:#75715e"></span>
+        staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">indexOf</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;A&#34;</span><span style="color:#f92672">);</span>
+
+        staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">();</span>
+        staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">isEmpty</span><span style="color:#f92672">();</span>
+
+        corporation<span style="color:#f92672">.</span><span style="color:#a6e22e">addAll</span><span style="color:#f92672">(</span>staffs<span style="color:#f92672">);</span><span style="color:#75715e">//将staffs中的元素全部添加到corporation
+</span><span style="color:#75715e"></span>        corporation<span style="color:#f92672">.</span><span style="color:#a6e22e">addAll</span><span style="color:#f92672">(</span>0<span style="color:#f92672">,</span>staffs<span style="color:#f92672">);</span> <span style="color:#75715e">//添加到指定位置
+</span><span style="color:#75715e"></span>
+        corporation<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">);</span> <span style="color:#75715e">//直接删除元素
+</span><span style="color:#75715e"></span>        corporation<span style="color:#f92672">.</span><span style="color:#a6e22e">remove</span><span style="color:#f92672">(</span>2<span style="color:#f92672">);</span>  <span style="color:#75715e">//表示把下标为2对应的值删掉，后面的值向前移动
+</span><span style="color:#75715e"></span>
+        corporation<span style="color:#f92672">.</span><span style="color:#a6e22e">clear</span><span style="color:#f92672">();</span>  <span style="color:#75715e">//清除所有数据
+</span><span style="color:#75715e"></span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">toString</span><span style="color:#f92672">());</span>
+
+        <span style="color:#66d9ef">for</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i<span style="color:#f92672">=</span>0<span style="color:#f92672">;</span>i<span style="color:#f92672">&lt;</span>staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">();</span>i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>i<span style="color:#f92672">));</span> <span style="color:#75715e">//打印所有元素
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;----&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#75715e">//另一种遍历方法：用迭代器方法。
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//staffs.iterator()把数组中的值放到了迭代器中，然后在迭代器中遍历
+</span><span style="color:#75715e"></span>        Iterator<span style="color:#f92672">&lt;</span>String<span style="color:#f92672">&gt;</span> iterator <span style="color:#f92672">=</span> staffs<span style="color:#f92672">.</span><span style="color:#a6e22e">iterator</span><span style="color:#f92672">();</span>
+        <span style="color:#66d9ef">while</span><span style="color:#f92672">(</span>iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">hasNext</span><span style="color:#f92672">())</span> <span style="color:#f92672">{</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>iterator<span style="color:#f92672">.</span><span style="color:#a6e22e">next</span><span style="color:#f92672">());</span>  <span style="color:#75715e">//下标后移，并且判断是否有数据了   iterator.next()就是值
+</span><span style="color:#75715e"></span>        <span style="color:#f92672">}</span>
+    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+
+</code></pre></div><h3 id="arraylist_sort">Arraylist_sort</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"> <span style="color:#75715e">// Arraylist_sort
+</span><span style="color:#75715e"></span>
+<span style="color:#f92672">import</span> java.util.ArrayList<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Collections<span style="color:#f92672">;</span>
+<span style="color:#f92672">import</span> java.util.Scanner<span style="color:#f92672">;</span>
+
+<span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Arraylist_sort</span> <span style="color:#f92672">{</span>
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+        Scanner scan <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> Scanner<span style="color:#f92672">(</span>System<span style="color:#f92672">.</span><span style="color:#a6e22e">in</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">int</span> n<span style="color:#f92672">;</span>
+        ArrayList al <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> ArrayList<span style="color:#f92672">();</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;请输入需要的个数&#34;</span><span style="color:#f92672">);</span>
+        n <span style="color:#f92672">=</span> scan<span style="color:#f92672">.</span><span style="color:#a6e22e">nextInt</span><span style="color:#f92672">();</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;请逐一输入&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> n<span style="color:#f92672">;</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            al<span style="color:#f92672">.</span><span style="color:#a6e22e">add</span><span style="color:#f92672">(</span>i<span style="color:#f92672">,</span> scan<span style="color:#f92672">.</span><span style="color:#a6e22e">nextInt</span><span style="color:#f92672">());</span>
+        <span style="color:#f92672">}</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;你输入的数字是：&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> al<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">();</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">int</span> temp <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span><span style="color:#f92672">)</span> al<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>i<span style="color:#f92672">);</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span>temp <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+        Collections<span style="color:#f92672">.</span><span style="color:#a6e22e">sort</span><span style="color:#f92672">(</span>al<span style="color:#f92672">);</span>  <span style="color:#75715e">// 针对一个ArrayList内部的数据排序,默认从小到大排序
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">// Collections.sort(al,Collections.reverseOrder());  //从大到小
+</span><span style="color:#75715e"></span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">();</span>
+        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span><span style="color:#e6db74">&#34;经过排序后：&#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#66d9ef">for</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> i <span style="color:#f92672">=</span> 0<span style="color:#f92672">;</span> i <span style="color:#f92672">&lt;</span> al<span style="color:#f92672">.</span><span style="color:#a6e22e">size</span><span style="color:#f92672">();</span> i<span style="color:#f92672">++)</span> <span style="color:#f92672">{</span>
+            <span style="color:#66d9ef">int</span> temp <span style="color:#f92672">=</span> <span style="color:#f92672">(</span><span style="color:#66d9ef">int</span><span style="color:#f92672">)</span> al<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">(</span>i<span style="color:#f92672">);</span>
+            System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">print</span><span style="color:#f92672">(</span>temp <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; &#34;</span><span style="color:#f92672">);</span>
+        <span style="color:#f92672">}</span>
+
+        <span style="color:#75715e">//Collections.sort() 方法对 ArrayList 的元素或者任何其他 List 的实现提供的可比较的元素进行排序，
+</span><span style="color:#75715e"></span>        <span style="color:#75715e">//这意味着这些元素的类需要实现 java.lang 包中的 Comparable 接口。
+</span><span style="color:#75715e"></span>    <span style="color:#f92672">}</span>
+<span style="color:#f92672">}</span>
+</code></pre></div>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">Java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/source/" rel="tag">source</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Hory avatar" src="/img/gitHubOlder.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Hory</span>
+	</div>
+	<div class="authorbox__description">
+		Contact Me: <a href="mailto:HoryChang@163.com">HoryChang@163.com</a>
+	</div>
+</div>
+
+
+
+
+		</div>
+		
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 DGSP local group.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			<span><a href="/imprint">Imprint and Privacy</a></span>
+		</div>
+		
+<div class="footer__copyright">Donate!</div>
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>
