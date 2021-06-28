@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>TreeMap - Hugo DPSG</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="TreeMap" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://horycloud.github.io/post/treemap/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-06-28T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-06-28T00:00:00&#43;00:00" />
+
+
+		<meta itemprop="name" content="TreeMap">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2021-06-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="1257">
+<meta itemprop="keywords" content="Java,source," />
+		<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="TreeMap"/>
+<meta name="twitter:description" content=""/>
+
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="https://horycloud.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo logo--mixed">
+		<div class="container">
+			<a class="logo__link" href="/" title="HORY BLOG" rel="home">
+				<div class="logo__item logo__imagebox">
+						<img class="logo__img" src="/img/placeholder.png">
+					</div><div class="logo__item logo__text">
+						<div class="logo__title">HORY BLOG</div>
+						<div class="logo__tagline">Welcome to my site</div>
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+
+<nav class="menu">
+	<div class="container">
+		<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+			<span class="menu__btn-title" tabindex="-1">Menu</span>
+		</button>
+		<ul class="menu__list">
+			<li class="menu__item">
+				<a class="menu__link" href="/">
+					
+					<span class="menu__text">Home</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="/about/">
+					
+					<span class="menu__text">About</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://gitee.com/HoryCloud">
+					
+					<span class="menu__text">Gitee</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://github.com/Horycloud">
+					
+					<span class="menu__text">GitHub</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://blog.csdn.net/weixin_44471490">
+					
+					<span class="menu__text">CSDN</span>
+					
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">TreeMap</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Hory</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-06-28T00:00:00Z">28.06.2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java-collection/" rel="category">Java Collection</a>
+	</span>
+</div></div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+        <li><a href="#字段定义">字段定义</a></li>
+        <li><a href="#构造函数">构造函数</a></li>
+        <li><a href="#添加元素">添加元素</a></li>
+        <li><a href="#删除元素">删除元素</a></li>
+        <li><a href="#查找元素">查找元素</a></li>
+        <li><a href="#遍历元素">遍历元素</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h3 id="简介">简介</h3>
+<p>TreeMap 是由红黑树实现的有序的 key-value 集合。</p>
+<ul>
+<li>想要学懂TreeMap的实现原理，<a href="https://www.cnblogs.com/ysocean/p/8004211.html">红黑树</a>的了解是必不可少的！</li>
+</ul>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#815ba4">public</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">TreeMap</span><span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>    <span style="color:#815ba4">extends</span> AbstractMap<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>    <span style="color:#815ba4">implements</span> NavigableMap<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;,</span> Cloneable<span style="color:#5bc4bf">,</span> java<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">io</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Serializable</span> <span style="color:#5bc4bf">{}</span>
+</code></pre></div><p>TreeMap 首先继承了 AbstractMap 抽象类，表示它具有散列表的性质，也就是由 key-value 组成。</p>
+<p>其次 TreeMap 实现了 NavigableMap 接口，该接口支持一系列获取指定集合的导航方法，比如获取小于指定key的集合。</p>
+<p>最后分别实现 Serializable 接口以及 Cloneable 接口，分别表示支持对象序列化以及<a href="https://www.cnblogs.com/ysocean/p/8482979.html">对象克隆</a>。</p>
+<h3 id="字段定义">字段定义</h3>
+<blockquote>
+<p>Comparator</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#776e71">/**
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#776e71"> * The comparator used to maintain order in this tree map, or
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span style="color:#776e71"> * null if it uses the natural ordering of its keys.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span style="color:#776e71"> * @serial
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span style="color:#776e71"> */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">final</span> Comparator<span style="color:#5bc4bf">&lt;?</span> <span style="color:#815ba4">super</span> K<span style="color:#5bc4bf">&gt;</span> comparator<span style="color:#5bc4bf">;</span>
+</code></pre></div><p>可以看上面的英文注释，Comparator 是用来维护 treemap 集合中的顺序，如果为null，则按照 key 的自然顺序。</p>
+<p>Comparator 是一个接口，排序时需要实现其 compare 方法，该方法返回正数、零、负数分别代表大于、等于、小于。那么怎么使用呢？这里举个例子：</p>
+<p>这里有一个Person类，里面有两个属性name，age，将该person对象放入ArrayList集合时，需要对其按照年龄进行排序。</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#5bc4bf">package</span> <span style="color:#fec418">testTreeMap</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#776e71">/**
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span style="color:#776e71"> * @AUTHER Hory
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span style="color:#776e71"> * @TYPE Class
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#776e71"> * @DATE 2021/3/19
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#776e71"> */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#815ba4">public</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">Person</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>    <span style="color:#815ba4">private</span> String name<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    <span style="color:#815ba4">private</span> Integer age<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    <span style="color:#815ba4">public</span> <span style="color:#06b6ef">Person</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>    <span style="color:#815ba4">public</span> <span style="color:#06b6ef">Person</span><span style="color:#5bc4bf">(</span>String name<span style="color:#5bc4bf">,</span> Integer age<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>        <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">name</span> <span style="color:#5bc4bf">=</span> name<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>        <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">age</span> <span style="color:#5bc4bf">=</span> age<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>    <span style="color:#815ba4">public</span> String <span style="color:#06b6ef">getName</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>        <span style="color:#815ba4">return</span> name<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">void</span> <span style="color:#06b6ef">setName</span><span style="color:#5bc4bf">(</span>String name<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>        <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">name</span> <span style="color:#5bc4bf">=</span> name<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>    <span style="color:#815ba4">public</span> Integer <span style="color:#06b6ef">getAge</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>        <span style="color:#815ba4">return</span> age<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">void</span> <span style="color:#06b6ef">setAge</span><span style="color:#5bc4bf">(</span>Integer Age<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>        <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">age</span> <span style="color:#5bc4bf">=</span> age<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>    <span style="color:#5bc4bf">@Override</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>    <span style="color:#815ba4">public</span> String <span style="color:#06b6ef">toString</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>        <span style="color:#815ba4">return</span> <span style="color:#48b685">&#34;Person{&#34;</span> <span style="color:#5bc4bf">+</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>                <span style="color:#48b685">&#34;name=&#39;&#34;</span> <span style="color:#5bc4bf">+</span> name <span style="color:#5bc4bf">+</span> <span style="color:#48b685">&#39;\&#39;&#39;</span> <span style="color:#5bc4bf">+</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>                <span style="color:#48b685">&#34;, age=&#34;</span> <span style="color:#5bc4bf">+</span> age <span style="color:#5bc4bf">+</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>                <span style="color:#48b685">&#39;}&#39;</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>排序代码：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>List<span style="color:#5bc4bf">&lt;</span>Person<span style="color:#5bc4bf">&gt;</span> personList <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> ArrayList<span style="color:#5bc4bf">&lt;&gt;();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>personList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#815ba4">new</span> Person<span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;李四&#34;</span><span style="color:#5bc4bf">,</span>20<span style="color:#5bc4bf">));</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>personList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#815ba4">new</span> Person<span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;张三&#34;</span><span style="color:#5bc4bf">,</span>10<span style="color:#5bc4bf">));</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>personList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#815ba4">new</span> Person<span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;王五&#34;</span><span style="color:#5bc4bf">,</span>30<span style="color:#5bc4bf">));</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">println</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;原始顺序为：&#34;</span><span style="color:#5bc4bf">+</span>personList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">toString</span><span style="color:#5bc4bf">());</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>Collections<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">sort</span><span style="color:#5bc4bf">(</span>personList<span style="color:#5bc4bf">,</span> <span style="color:#815ba4">new</span> Comparator<span style="color:#5bc4bf">&lt;</span>Person<span style="color:#5bc4bf">&gt;()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>    <span style="color:#5bc4bf">@Override</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">int</span> <span style="color:#06b6ef">compare</span><span style="color:#5bc4bf">(</span>Person o1<span style="color:#5bc4bf">,</span> Person o2<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>        <span style="color:#776e71">//return o1.getPage()-o2.getPage();  // 升序
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span style="color:#776e71"></span>        <span style="color:#815ba4">return</span> o2<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">getAge</span><span style="color:#5bc4bf">()-</span>o1<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">getAge</span><span style="color:#5bc4bf">();</span>      <span style="color:#776e71">// 降序 
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span style="color:#776e71"></span>        <span style="color:#776e71">//return 0;   // 不变
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span style="color:#776e71"></span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span style="color:#5bc4bf">});</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">println</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;排序后顺序为：&#34;</span> <span style="color:#5bc4bf">+</span> personList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">toString</span><span style="color:#5bc4bf">());</span>
+</code></pre></div><p>打印结果为：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>原始顺序为<span style="color:#ef6155">：</span><span style="color:#5bc4bf">[</span>Person<span style="color:#5bc4bf">{</span>name<span style="color:#5bc4bf">=</span><span style="color:#ef6155">&#39;</span>李四<span style="color:#ef6155">&#39;</span><span style="color:#5bc4bf">,</span> age<span style="color:#5bc4bf">=</span>20<span style="color:#5bc4bf">},</span> Person<span style="color:#5bc4bf">{</span>name<span style="color:#5bc4bf">=</span><span style="color:#ef6155">&#39;</span>张三<span style="color:#ef6155">&#39;</span><span style="color:#5bc4bf">,</span> age<span style="color:#5bc4bf">=</span>10<span style="color:#5bc4bf">},</span> Person<span style="color:#5bc4bf">{</span>name<span style="color:#5bc4bf">=</span><span style="color:#ef6155">&#39;</span>王五<span style="color:#ef6155">&#39;</span><span style="color:#5bc4bf">,</span> age<span style="color:#5bc4bf">=</span>30<span style="color:#5bc4bf">}]</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>排序后顺序为<span style="color:#ef6155">：</span><span style="color:#5bc4bf">[</span>Person<span style="color:#5bc4bf">{</span>name<span style="color:#5bc4bf">=</span><span style="color:#ef6155">&#39;</span>王五<span style="color:#ef6155">&#39;</span><span style="color:#5bc4bf">,</span> age<span style="color:#5bc4bf">=</span>30<span style="color:#5bc4bf">},</span> Person<span style="color:#5bc4bf">{</span>name<span style="color:#5bc4bf">=</span><span style="color:#ef6155">&#39;</span>李四<span style="color:#ef6155">&#39;</span><span style="color:#5bc4bf">,</span> age<span style="color:#5bc4bf">=</span>20<span style="color:#5bc4bf">},</span> Person<span style="color:#5bc4bf">{</span>name<span style="color:#5bc4bf">=</span><span style="color:#ef6155">&#39;</span>张三<span style="color:#ef6155">&#39;</span><span style="color:#5bc4bf">,</span> age<span style="color:#5bc4bf">=</span>10<span style="color:#5bc4bf">}]</span>
+</code></pre></div><blockquote>
+<p>Entry</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">transient</span> Entry<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> root<span style="color:#5bc4bf">;</span>
+</code></pre></div><p>Entry详细源码如下：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">static</span> <span style="color:#815ba4">final</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">Entry</span><span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> <span style="color:#815ba4">implements</span> Map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    K key<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    V value<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    Entry<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> left<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>    Entry<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> right<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>    Entry<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> parent<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>    <span style="color:#fec418">boolean</span> color <span style="color:#5bc4bf">=</span> BLACK<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>    <span style="color:#776e71">/**
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span style="color:#776e71">         * Make a new cell with given key, value, and parent, and with
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span style="color:#776e71">         * {@code null} child links, and BLACK color.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span style="color:#776e71">         */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>    Entry<span style="color:#5bc4bf">(</span>K key<span style="color:#5bc4bf">,</span> V value<span style="color:#5bc4bf">,</span> Entry<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> parent<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>        <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span> <span style="color:#5bc4bf">=</span> key<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>        <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">value</span> <span style="color:#5bc4bf">=</span> value<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>        <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">parent</span> <span style="color:#5bc4bf">=</span> parent<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>    <span style="color:#776e71">/**
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span><span style="color:#776e71">         * Returns the key.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span style="color:#776e71">         *
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span style="color:#776e71">         * @return the key
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span><span style="color:#776e71">         */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>    <span style="color:#815ba4">public</span> K <span style="color:#06b6ef">getKey</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>        <span style="color:#815ba4">return</span> key<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>    <span style="color:#776e71">/**
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span><span style="color:#776e71">         * Returns the value associated with the key.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span style="color:#776e71">         *
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span><span style="color:#776e71">         * @return the value associated with the key
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span><span style="color:#776e71">         */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>    <span style="color:#815ba4">public</span> V <span style="color:#06b6ef">getValue</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>        <span style="color:#815ba4">return</span> value<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>    <span style="color:#776e71">/**
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span><span style="color:#776e71">         * Replaces the value currently associated with the key with the given
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span><span style="color:#776e71">         * value.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span><span style="color:#776e71">         *
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span><span style="color:#776e71">         * @return the value associated with the key before this method was
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span><span style="color:#776e71">         *         called
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span><span style="color:#776e71">         */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span>    <span style="color:#815ba4">public</span> V <span style="color:#06b6ef">setValue</span><span style="color:#5bc4bf">(</span>V value<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span>        V oldValue <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">value</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span>        <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">value</span> <span style="color:#5bc4bf">=</span> value<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>        <span style="color:#815ba4">return</span> oldValue<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">boolean</span> <span style="color:#06b6ef">equals</span><span style="color:#5bc4bf">(</span>Object o<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(!(</span>o <span style="color:#815ba4">instanceof</span> Map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">))</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span>            <span style="color:#815ba4">return</span> <span style="color:#815ba4">false</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span>        Map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;?,?&gt;</span> e <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>Map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;?,?&gt;)</span>o<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span>        <span style="color:#815ba4">return</span> valEquals<span style="color:#5bc4bf">(</span>key<span style="color:#5bc4bf">,</span>e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">getKey</span><span style="color:#5bc4bf">())</span> <span style="color:#5bc4bf">&amp;&amp;</span> valEquals<span style="color:#5bc4bf">(</span>value<span style="color:#5bc4bf">,</span>e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">getValue</span><span style="color:#5bc4bf">());</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">int</span> <span style="color:#06b6ef">hashCode</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59</span>        <span style="color:#fec418">int</span> keyHash <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>key<span style="color:#5bc4bf">==</span><span style="color:#815ba4">null</span> <span style="color:#5bc4bf">?</span> 0 <span style="color:#5bc4bf">:</span> key<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hashCode</span><span style="color:#5bc4bf">());</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60</span>        <span style="color:#fec418">int</span> valueHash <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>value<span style="color:#5bc4bf">==</span><span style="color:#815ba4">null</span> <span style="color:#5bc4bf">?</span> 0 <span style="color:#5bc4bf">:</span> value<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hashCode</span><span style="color:#5bc4bf">());</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61</span>        <span style="color:#815ba4">return</span> keyHash <span style="color:#5bc4bf">^</span> valueHash<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64</span>    <span style="color:#815ba4">public</span> String <span style="color:#06b6ef">toString</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65</span>        <span style="color:#815ba4">return</span> key <span style="color:#5bc4bf">+</span> <span style="color:#48b685">&#34;=&#34;</span> <span style="color:#5bc4bf">+</span> value<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>这里主要看 Entry 类的几个字段：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>K key<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>V value<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>Entry<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> left<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>Entry<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> right<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>Entry<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> parent<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span style="color:#fec418">boolean</span> color <span style="color:#5bc4bf">=</span> BLACK<span style="color:#5bc4bf">;</span>
+</code></pre></div><p>相信对<a href="https://www.cnblogs.com/ysocean/p/8004211.html">红黑树</a>这种数据结构了解的人，一看这几个字段就明白了，这也印证了前面所说的 TreeMap 底层有红黑树这种数据结构。</p>
+<blockquote>
+<p>size</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#776e71">/**
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#776e71"> * The number of entries in the tree
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span style="color:#776e71"> */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">transient</span> <span style="color:#fec418">int</span> size <span style="color:#5bc4bf">=</span> 0<span style="color:#5bc4bf">;</span>
+</code></pre></div><p>用来表示 entry 的个数，也就是 key-value 的个数。</p>
+<blockquote>
+<p>modCount</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#776e71">/**
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#776e71"> * The number of structural modifications to the tree.
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span style="color:#776e71"> */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">transient</span> <span style="color:#fec418">int</span> modCount <span style="color:#5bc4bf">=</span> 0<span style="color:#5bc4bf">;</span>
+</code></pre></div><p>基本上前面讲的在 ArrayList、LinkedList、HashMap 等线程不安全的集合都有此字段，用来实现 Fail-Fast 机制，如果在迭代这些集合的过程中，有其他线程修改了这些集合，就会抛出 ConcurrentModificationException 异常。</p>
+<blockquote>
+<p>红黑树常量</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">static</span> <span style="color:#815ba4">final</span> <span style="color:#fec418">boolean</span> RED   <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">false</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">static</span> <span style="color:#815ba4">final</span> <span style="color:#fec418">boolean</span> BLACK <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">true</span><span style="color:#5bc4bf">;</span>
+</code></pre></div><h3 id="构造函数">构造函数</h3>
+<blockquote>
+<p>无参构造函数</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>public TreeMap() {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>    comparator = null;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>}
+</code></pre></div><p>将比较器 comparator 置为 null，表示按照 key 的自然顺序进行排序。</p>
+<blockquote>
+<p>带比较器的构造函数</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>public TreeMap(Comparator&lt;? super K&gt; comparator) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>    this.comparator = comparator;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>}
+</code></pre></div><p>需要自己实现Comparator。</p>
+<blockquote>
+<p>构造包含指定map集合的元素</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>public TreeMap(Map&lt;? extends K, ? extends V&gt; m) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>    comparator = null;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>    putAll(m);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>}
+</code></pre></div><p>使用该构造器创建的 TreeMap，会默认插入m表示的集合元素，并且comparator表示按照自然顺序进行插入。</p>
+<blockquote>
+<p>带 SortedMap 的构造函数</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>public TreeMap(SortedMap&lt;K, ? extends V&gt; m) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>	comparator = m.comparator();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>	try {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>		buildFromSorted(m.size(), m.entrySet().iterator(), null, null);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>	} catch (java.io.IOException cannotHappen) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span>	} catch (ClassNotFoundException cannotHappen) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span>	}
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8</span>}
+</code></pre></div><p>和上面带 Map 的构造函数不一样，map 是无序的，而 SortedMap 是有序的，使用 buildFromSorted() 方法将SortedMap 集合中的元素插入到 TreeMap 中。</p>
+<h3 id="添加元素">添加元素</h3>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">public</span> V <span style="color:#06b6ef">put</span><span style="color:#5bc4bf">(</span>K key<span style="color:#5bc4bf">,</span> V value<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    TreeMap<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> t <span style="color:#5bc4bf">=</span> root<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#776e71">// 如果根节点为空，即TreeMap中一个元素都没有，那么设置新添加的元素为根节点
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span style="color:#776e71"></span>    <span style="color:#776e71">// 并且设置集合大小size=1,以及modCount+1，这是用于快速失败
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span style="color:#776e71"></span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>t <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>        compare<span style="color:#5bc4bf">(</span>key<span style="color:#5bc4bf">,</span> key<span style="color:#5bc4bf">);</span> <span style="color:#776e71">// type (and possibly null) check
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#776e71"></span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>        root <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> TreeMap<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;&gt;(</span>key<span style="color:#5bc4bf">,</span> value<span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>        size <span style="color:#5bc4bf">=</span> 1<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>        modCount<span style="color:#5bc4bf">++;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>        <span style="color:#815ba4">return</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>    <span style="color:#fec418">int</span> cmp<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>    TreeMap<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> parent<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>    <span style="color:#776e71">// split comparator and comparable paths
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span style="color:#776e71"></span>    Comparator<span style="color:#5bc4bf">&lt;?</span> <span style="color:#815ba4">super</span> K<span style="color:#5bc4bf">&gt;</span> cpr <span style="color:#5bc4bf">=</span> comparator<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    <span style="color:#776e71">// 如果比较器不为空，即初始化TreeMap构造函数时，有传递comparator类
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span style="color:#776e71"></span>    <span style="color:#776e71">// 那么插入新的元素时，按照comparator实现的类进行排序
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span style="color:#776e71"></span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>cpr <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>        <span style="color:#776e71">// 通过do-while循环不断遍历树，调用比较器对key值进行比较
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span><span style="color:#776e71"></span>        <span style="color:#815ba4">do</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>            parent <span style="color:#5bc4bf">=</span> t<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>            cmp <span style="color:#5bc4bf">=</span> cpr<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">compare</span><span style="color:#5bc4bf">(</span>key<span style="color:#5bc4bf">,</span> t<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>cmp <span style="color:#5bc4bf">&lt;</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>                t <span style="color:#5bc4bf">=</span> t<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">left</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>            <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>cmp <span style="color:#5bc4bf">&gt;</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>                t <span style="color:#5bc4bf">=</span> t<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">right</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>            <span style="color:#815ba4">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>                <span style="color:#776e71">// 遇到key相等，直接将新值覆盖到原值上
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span><span style="color:#776e71"></span>                <span style="color:#815ba4">return</span> t<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">setValue</span><span style="color:#5bc4bf">(</span>value<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>        <span style="color:#5bc4bf">}</span> <span style="color:#815ba4">while</span> <span style="color:#5bc4bf">(</span>t <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>    <span style="color:#776e71">// 如果比较器为空，即初始化TreeMap构造函数时，没有传递comparator类
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span><span style="color:#776e71"></span>    <span style="color:#776e71">// 那么插入新的元素时，按照key的自然顺序
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span><span style="color:#776e71"></span>    <span style="color:#815ba4">else</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>        <span style="color:#776e71">// 如果key==null，直接抛出异常
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span><span style="color:#776e71"></span>        <span style="color:#776e71">// 注意，上面构造TreeMap传入了Comparator，是可以允许key==null
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span><span style="color:#776e71"></span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>key <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>            <span style="color:#815ba4">throw</span> <span style="color:#815ba4">new</span> NullPointerException<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>        <span style="color:#5bc4bf">@SuppressWarnings</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;unchecked&#34;</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>        Comparable<span style="color:#5bc4bf">&lt;?</span> <span style="color:#815ba4">super</span> K<span style="color:#5bc4bf">&gt;</span> k <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>Comparable<span style="color:#5bc4bf">&lt;?</span> <span style="color:#815ba4">super</span> K<span style="color:#5bc4bf">&gt;)</span> key<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>        <span style="color:#815ba4">do</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span>            parent <span style="color:#5bc4bf">=</span> t<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span>            cmp <span style="color:#5bc4bf">=</span> k<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">compareTo</span><span style="color:#5bc4bf">(</span>t<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>cmp <span style="color:#5bc4bf">&lt;</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span>                t <span style="color:#5bc4bf">=</span> t<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">left</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>            <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>cmp <span style="color:#5bc4bf">&gt;</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span>                t <span style="color:#5bc4bf">=</span> t<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">right</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>            <span style="color:#815ba4">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>                <span style="color:#815ba4">return</span> t<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">setValue</span><span style="color:#5bc4bf">(</span>value<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span>        <span style="color:#5bc4bf">}</span> <span style="color:#815ba4">while</span> <span style="color:#5bc4bf">(</span>t <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span>    <span style="color:#776e71">// 找到父亲节点，根据父亲节点创建一个新节点
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span><span style="color:#776e71"></span>    TreeMap<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> e <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> TreeMap<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;&gt;(</span>key<span style="color:#5bc4bf">,</span> value<span style="color:#5bc4bf">,</span> parent<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>cmp <span style="color:#5bc4bf">&lt;</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span>        parent<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">left</span> <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span>    <span style="color:#815ba4">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span>        parent<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">right</span> <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59</span>    <span style="color:#776e71">// 修正红黑树（包括节点的左旋和右旋，具体可以看我Java数据结构和算法中对红黑树的介绍）
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60</span><span style="color:#776e71"></span>    fixAfterInsertion<span style="color:#5bc4bf">(</span>e<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61</span>    size<span style="color:#5bc4bf">++;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62</span>    modCount<span style="color:#5bc4bf">++;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63</span>    <span style="color:#815ba4">return</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>添加元素，如果初始化 TreeMap 构造函数时，没有传递comparator类，是不允许插入 key==null 的键值对的，相反，如果实现了Comparator，则可以传递 key=null 的键值对。</p>
+<p>另外，当插入一个新的元素后（除了根节点），会对 TreeMap 数据结构进行修正，也就是对红黑树进行修正，使其满足红黑树的几个特点，具体修正方法包括改变节点颜色、左旋、右旋等操作，这里我不做详细介绍了，具体可以参考这篇博客：https://www.cnblogs.com/ysocean/p/8004211.html</p>
+<h3 id="删除元素">删除元素</h3>
+<p>根据 key 删除</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-fallback" data-lang="fallback"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>	public V get(Object key) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>        TreeMap.Entry&lt;K,V&gt; p = getEntry(key);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>        return (p==null ? null : p.value);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>    final TreeMap.Entry&lt;K,V&gt; getEntry(Object key) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>        // Offload comparator-based version for sake of performance
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>        if (comparator != null)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>            return getEntryUsingComparator(key);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>        if (key == null)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>            throw new NullPointerException();
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>        @SuppressWarnings(&#34;unchecked&#34;)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>        Comparable&lt;? super K&gt; k = (Comparable&lt;? super K&gt;) key;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>        TreeMap.Entry&lt;K,V&gt; p = root;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>        while (p != null) {
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>            int cmp = k.compareTo(p.key);
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>            if (cmp &lt; 0)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>                p = p.left;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>            else if (cmp &gt; 0)
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>                p = p.right;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>            else
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>                return p;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>        }
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>        return null;
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>    }
+</code></pre></div><p>删除节点分为四种情况：</p>
+<ol>
+<li>
+<p>根据 key 没有找到该节点：也就是集合中不存在这一个节点，直接返回null即可。</p>
+</li>
+<li>
+<p>根据key找到节点，又分为三种情况：</p>
+<ul>
+<li>① 待删除节点没有子节点，即为叶子节点：直接删除该节点即可。</li>
+<li>② 待删除节点只有一个子节点：那么首先找到待删除节点的子节点，然后删除该节点，用其唯一子节点顶替该节点。</li>
+<li>③ 待删除节点有两个子节点：首先找到该节点的中序后继节点，然后把这个后继节点的内容复制给待删除节点，然后删除该中序后继节点，删除过程又转换成前面①、②两种情况了，这里主要是找到中序后继节点，相当于待删除节点的一个替身。</li>
+</ul>
+</li>
+</ol>
+<h3 id="查找元素">查找元素</h3>
+<p>根据 key 查找</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">public</span> V <span style="color:#06b6ef">get</span><span style="color:#5bc4bf">(</span>Object key<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    TreeMap<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> p <span style="color:#5bc4bf">=</span> getEntry<span style="color:#5bc4bf">(</span>key<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#815ba4">return</span> <span style="color:#5bc4bf">(</span>p<span style="color:#5bc4bf">==</span><span style="color:#815ba4">null</span> <span style="color:#5bc4bf">?</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">:</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">value</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#815ba4">final</span> TreeMap<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">getEntry</span><span style="color:#5bc4bf">(</span>Object key<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>    <span style="color:#776e71">// Offload comparator-based version for sake of performance
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#776e71"></span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>comparator <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>        <span style="color:#815ba4">return</span> getEntryUsingComparator<span style="color:#5bc4bf">(</span>key<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>key <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>        <span style="color:#815ba4">throw</span> <span style="color:#815ba4">new</span> NullPointerException<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    <span style="color:#5bc4bf">@SuppressWarnings</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;unchecked&#34;</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>    Comparable<span style="color:#5bc4bf">&lt;?</span> <span style="color:#815ba4">super</span> K<span style="color:#5bc4bf">&gt;</span> k <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>Comparable<span style="color:#5bc4bf">&lt;?</span> <span style="color:#815ba4">super</span> K<span style="color:#5bc4bf">&gt;)</span> key<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>    TreeMap<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> p <span style="color:#5bc4bf">=</span> root<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>    <span style="color:#815ba4">while</span> <span style="color:#5bc4bf">(</span>p <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>        <span style="color:#fec418">int</span> cmp <span style="color:#5bc4bf">=</span> k<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">compareTo</span><span style="color:#5bc4bf">(</span>p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>cmp <span style="color:#5bc4bf">&lt;</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>            p <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">left</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>        <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>cmp <span style="color:#5bc4bf">&gt;</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>            p <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">right</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>        <span style="color:#815ba4">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>            <span style="color:#815ba4">return</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>    <span style="color:#815ba4">return</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><h3 id="遍历元素">遍历元素</h3>
+<p>通常有下面两种方法，第二种方法效率要快很多。</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>TreeMap<span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">,</span>Integer<span style="color:#5bc4bf">&gt;</span> map <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> TreeMap<span style="color:#5bc4bf">&lt;&gt;();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">put</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;A&#34;</span><span style="color:#5bc4bf">,</span>1<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">put</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;B&#34;</span><span style="color:#5bc4bf">,</span>2<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">put</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;C&#34;</span><span style="color:#5bc4bf">,</span>3<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#776e71">// 第一种方法
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#776e71">// 首先利用 keySet() 方法得到key的集合，然后利用map.get()方法根据key得到value
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#776e71"></span>Iterator<span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">&gt;</span> iterator <span style="color:#5bc4bf">=</span> map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">keySet</span><span style="color:#5bc4bf">().</span><span style="color:#06b6ef">iterator</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#815ba4">while</span><span style="color:#5bc4bf">(</span>iterator<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hasNext</span><span style="color:#5bc4bf">()){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    String key <span style="color:#5bc4bf">=</span> iterator<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>    System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">println</span><span style="color:#5bc4bf">(</span>key<span style="color:#5bc4bf">+</span><span style="color:#48b685">&#34;:&#34;</span><span style="color:#5bc4bf">+</span>map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">get</span><span style="color:#5bc4bf">(</span>key<span style="color:#5bc4bf">));</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span style="color:#776e71">//第二种方法
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span style="color:#776e71"></span>Iterator<span style="color:#5bc4bf">&lt;</span>Map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">,</span>Integer<span style="color:#5bc4bf">&gt;&gt;</span> iterator1 <span style="color:#5bc4bf">=</span> map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">entrySet</span><span style="color:#5bc4bf">().</span><span style="color:#06b6ef">iterator</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span style="color:#815ba4">while</span><span style="color:#5bc4bf">(</span>iterator1<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hasNext</span><span style="color:#5bc4bf">()){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    Map<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Entry</span><span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">,</span>Integer<span style="color:#5bc4bf">&gt;</span> entry <span style="color:#5bc4bf">=</span> iterator1<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>    System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">println</span><span style="color:#5bc4bf">(</span>entry<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">getKey</span><span style="color:#5bc4bf">()+</span><span style="color:#48b685">&#34;:&#34;</span><span style="color:#5bc4bf">+</span>entry<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">getValue</span><span style="color:#5bc4bf">());</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span style="color:#5bc4bf">}</span>
+</code></pre></div>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">Java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/source/" rel="tag">source</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Hory avatar" src="/img/gitHubOlder.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Hory</span>
+	</div>
+	<div class="authorbox__description">
+		Contact Me: <a href="mailto:HoryChang@163.com">HoryChang@163.com</a>
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/arraylist/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">ArrayList</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/linkedlist/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">LinkedList</p>
+		</a>
+	</div>
+</nav>
+
+
+
+		</div>
+		<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://horycloud.github.io/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/concurrenthashmap/">ConcurrentHashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/hashmap/">HashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/hashset/">HashSet</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/linkedhashmap/">LinkedHashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/linkedlist/">LinkedList</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java-collection/">Java Collection</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="Java">Java (7)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source/" title="source">source (7)</a>
+	</div>
+</div>
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:HoryChange@163.com">
+				<svg class="widget-social__link-icon icon icon-mail" width="24" height="24" viewBox="0 0 416 288"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>HoryChange@163.com</span>
+			</a>
+		</div>
+
+		
+	</div>
+</div>
+</aside>
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 DGSP local group.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			<span><a href="/imprint">Imprint and Privacy</a></span>
+		</div>
+		
+<div class="footer__copyright">Donate!</div>
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

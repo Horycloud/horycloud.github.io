@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>ConcurrentHashMap - Hugo DPSG</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="ConcurrentHashMap" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://horycloud.github.io/post/concurrenthashmap/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-06-28T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-06-28T00:00:00&#43;00:00" />
+
+
+		<meta itemprop="name" content="ConcurrentHashMap">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2021-06-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="2175">
+<meta itemprop="keywords" content="Java,source," />
+		<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="ConcurrentHashMap"/>
+<meta name="twitter:description" content=""/>
+
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="https://horycloud.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo logo--mixed">
+		<div class="container">
+			<a class="logo__link" href="/" title="HORY BLOG" rel="home">
+				<div class="logo__item logo__imagebox">
+						<img class="logo__img" src="/img/placeholder.png">
+					</div><div class="logo__item logo__text">
+						<div class="logo__title">HORY BLOG</div>
+						<div class="logo__tagline">Welcome to my site</div>
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+
+<nav class="menu">
+	<div class="container">
+		<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+			<span class="menu__btn-title" tabindex="-1">Menu</span>
+		</button>
+		<ul class="menu__list">
+			<li class="menu__item">
+				<a class="menu__link" href="/">
+					
+					<span class="menu__text">Home</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="/about/">
+					
+					<span class="menu__text">About</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://gitee.com/HoryCloud">
+					
+					<span class="menu__text">Gitee</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://github.com/Horycloud">
+					
+					<span class="menu__text">GitHub</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://blog.csdn.net/weixin_44471490">
+					
+					<span class="menu__text">CSDN</span>
+					
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">ConcurrentHashMap</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Hory</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-06-28T00:00:00Z">28.06.2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java-collection/" rel="category">Java Collection</a>
+	</span>
+</div></div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+        <li><a href="#concurrenthashmap-jdk18的实现">ConcurrentHashMap JDK1.8的实现</a></li>
+        <li><a href="#初始化">初始化</a></li>
+        <li><a href="#添加元素">添加元素</a></li>
+        <li><a href="#获取元素">获取元素</a></li>
+        <li><a href="#size方法">size()方法</a></li>
+        <li><a href="#总结">总结</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h3 id="简介">简介</h3>
+<blockquote>
+<p>HashTable</p>
+</blockquote>
+<p>HashMap 在多线程情况下，put 的时候，插入的元素超过了容量（由负载因子决定）的范围就会触发扩容操作，就是 rehash，这个会重新将原数组的内容重新 hash 到新的扩容数组中，在多线程的环境下，存在同时其他的元素也在进行 put 操作，如果 hash 值相同，可能出现同时在同一数组下用链表表示，造成闭环（循环链表），导致在 get 时会出现死循环，所以 HashMap 是线程不安全的。</p>
+<p>HashTable 也是个键值存储集合，它是线程安全的，它在所有涉及到多线程操作上都加上了<code>synchronized</code>关键字来锁住整个table，这就意味着所有的线程都在竞争一把锁，在多线程的环境下，它是安全的，但是无疑是效率低下的。</p>
+<p>其实 HashTable 有很大的优化空间，锁住整个 table 这么粗暴的方式可以变相的柔和点，比如在多线程的环境下，对不同的数据集进行操作时其实根本就不需要去竞争一个锁，因为它们 hash 值不同，不会因为rehash造成线程不安全，所以互不影响，这就是<code>锁分离</code>技术，将锁的粒度降低，利用多个锁来控制多个小的 table。</p>
+<h3 id="concurrenthashmap-jdk18的实现">ConcurrentHashMap JDK1.8的实现</h3>
+<p>JDK1.8 的实现已经摒弃了 Segment 的概念，而是直接用<code>Node数组+链表+红黑树</code>的数据结构来实现，并发控制使用 <code>Synchronized</code> 和 <code>CAS</code> 来操作，整个看起来就像是优化过且线程安全的HashMap，虽然在JDK1.8中还能看到Segment的数据结构，但是已经简化了属性，只是为了兼容旧版本。</p>
+<p>其他内容跟HashMap大同小异，看一下与HashMap不同的地方。</p>
+<blockquote>
+<p>TreeBin</p>
+</blockquote>
+<p>TreeBin 从字面含义中可以理解为存储树形结构的容器，而树形结构就是指 TreeNode，所以 TreeBin 就是封装 TreeNode 的容器，它提供转换黑红树的一些条件和锁的控制：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>TreeBin<span style="color:#5bc4bf">(</span>TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> b<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    <span style="color:#815ba4">super</span><span style="color:#5bc4bf">(</span>TREEBIN<span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">first</span> <span style="color:#5bc4bf">=</span> b<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> r <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>    <span style="color:#815ba4">for</span> <span style="color:#5bc4bf">(</span>TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> x <span style="color:#5bc4bf">=</span> b<span style="color:#5bc4bf">,</span> next<span style="color:#5bc4bf">;</span> x <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span> x <span style="color:#5bc4bf">=</span> next<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>        next <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;)</span>x<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>        x<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">left</span> <span style="color:#5bc4bf">=</span> x<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">right</span> <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>r <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>            x<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">parent</span> <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>            x<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">red</span> <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">false</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>            r <span style="color:#5bc4bf">=</span> x<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>        <span style="color:#815ba4">else</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>            K k <span style="color:#5bc4bf">=</span> x<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>            <span style="color:#fec418">int</span> h <span style="color:#5bc4bf">=</span> x<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>            Class<span style="color:#5bc4bf">&lt;?&gt;</span> kc <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>            <span style="color:#815ba4">for</span> <span style="color:#5bc4bf">(</span>TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> p <span style="color:#5bc4bf">=</span> r<span style="color:#5bc4bf">;;)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>                <span style="color:#fec418">int</span> dir<span style="color:#5bc4bf">,</span> ph<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>                K pk <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>ph <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&gt;</span> h<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>                    dir <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">-</span>1<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>                <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>ph <span style="color:#5bc4bf">&lt;</span> h<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>                    dir <span style="color:#5bc4bf">=</span> 1<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>                <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>kc <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">&amp;&amp;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>                          <span style="color:#5bc4bf">(</span>kc <span style="color:#5bc4bf">=</span> comparableClassFor<span style="color:#5bc4bf">(</span>k<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">||</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>                         <span style="color:#5bc4bf">(</span>dir <span style="color:#5bc4bf">=</span> compareComparables<span style="color:#5bc4bf">(</span>kc<span style="color:#5bc4bf">,</span> k<span style="color:#5bc4bf">,</span> pk<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">==</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>                    dir <span style="color:#5bc4bf">=</span> tieBreakOrder<span style="color:#5bc4bf">(</span>k<span style="color:#5bc4bf">,</span> pk<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>                TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> xp <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>p <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>dir <span style="color:#5bc4bf">&lt;=</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">?</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">left</span> <span style="color:#5bc4bf">:</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">right</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>                    x<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">parent</span> <span style="color:#5bc4bf">=</span> xp<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>                    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>dir <span style="color:#5bc4bf">&lt;=</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>                        xp<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">left</span> <span style="color:#5bc4bf">=</span> x<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>                    <span style="color:#815ba4">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>                        xp<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">right</span> <span style="color:#5bc4bf">=</span> x<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>                    r <span style="color:#5bc4bf">=</span> balanceInsertion<span style="color:#5bc4bf">(</span>r<span style="color:#5bc4bf">,</span> x<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>                    <span style="color:#815ba4">break</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>                <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>    <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">root</span> <span style="color:#5bc4bf">=</span> r<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>    <span style="color:#815ba4">assert</span> checkInvariants<span style="color:#5bc4bf">(</span>root<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><h3 id="初始化">初始化</h3>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#776e71">// 初始化 ConcurrentHashMap
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#776e71"></span>ConcurrentHashMap<span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">,</span> String<span style="color:#5bc4bf">&gt;</span> map <span style="color:#5bc4bf">=</span>  <span style="color:#815ba4">new</span> ConcurrentHashMap<span style="color:#5bc4bf">();</span>  
+</code></pre></div><p>其中无参构造函数：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#815ba4">public</span> <span style="color:#06b6ef">ConcurrentHashMap</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{}</span>
+</code></pre></div><p>从上面的无参构造函数 可以看到，ConcurrentHashMap 的初始化其实是一个空实现，里面并没有做任何事，这也是和其他的集合类有区别的地方，初始化操作并不是在构造函数实现的，而是在 <code>put</code> 操作中实现，当然 ConcurrentHashMap 还提供了其他的构造函数，有指定容量大小或者指定负载因子，跟HashMap一样。</p>
+<h3 id="添加元素">添加元素</h3>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">public</span> V <span style="color:#06b6ef">put</span><span style="color:#5bc4bf">(</span>K key<span style="color:#5bc4bf">,</span> V value<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    <span style="color:#815ba4">return</span> putVal<span style="color:#5bc4bf">(</span>key<span style="color:#5bc4bf">,</span> value<span style="color:#5bc4bf">,</span> <span style="color:#815ba4">false</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span><span style="color:#776e71">/** Implementation for put and putIfAbsent */</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#815ba4">final</span> V <span style="color:#06b6ef">putVal</span><span style="color:#5bc4bf">(</span>K key<span style="color:#5bc4bf">,</span> V value<span style="color:#5bc4bf">,</span> <span style="color:#fec418">boolean</span> onlyIfAbsent<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>key <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">||</span> value <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#815ba4">throw</span> <span style="color:#815ba4">new</span> NullPointerException<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>    <span style="color:#fec418">int</span> hash <span style="color:#5bc4bf">=</span> spread<span style="color:#5bc4bf">(</span>key<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hashCode</span><span style="color:#5bc4bf">());</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>    <span style="color:#fec418">int</span> binCount <span style="color:#5bc4bf">=</span> 0<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    <span style="color:#815ba4">for</span> <span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> tab <span style="color:#5bc4bf">=</span> table<span style="color:#5bc4bf">;;)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>        Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> f<span style="color:#5bc4bf">;</span> <span style="color:#fec418">int</span> n<span style="color:#5bc4bf">,</span> i<span style="color:#5bc4bf">,</span> fh<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>tab <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">||</span> <span style="color:#5bc4bf">(</span>n <span style="color:#5bc4bf">=</span> tab<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">length</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>            tab <span style="color:#5bc4bf">=</span> initTable<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>        <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>f <span style="color:#5bc4bf">=</span> tabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> i <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>n <span style="color:#5bc4bf">-</span> 1<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&amp;</span> hash<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>casTabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> i<span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">,</span>     
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>                         <span style="color:#815ba4">new</span> Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;(</span>hash<span style="color:#5bc4bf">,</span> key<span style="color:#5bc4bf">,</span> value<span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)))</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>                <span style="color:#815ba4">break</span><span style="color:#5bc4bf">;</span>                   <span style="color:#776e71">// no lock when adding to empty bin
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span style="color:#776e71"></span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>        <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>fh <span style="color:#5bc4bf">=</span> f<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> MOVED<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>            tab <span style="color:#5bc4bf">=</span> helpTransfer<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> f<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>        <span style="color:#815ba4">else</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>            V oldVal <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>            <span style="color:#815ba4">synchronized</span> <span style="color:#5bc4bf">(</span>f<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span> 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>tabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> i<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> f<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>                    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>fh <span style="color:#5bc4bf">&gt;=</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>                        binCount <span style="color:#5bc4bf">=</span> 1<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>                        <span style="color:#815ba4">for</span> <span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> e <span style="color:#5bc4bf">=</span> f<span style="color:#5bc4bf">;;</span> <span style="color:#5bc4bf">++</span>binCount<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>                            K ek<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>                            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span> <span style="color:#5bc4bf">==</span> hash <span style="color:#5bc4bf">&amp;&amp;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>                                <span style="color:#5bc4bf">((</span>ek <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> key <span style="color:#5bc4bf">||</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>                                 <span style="color:#5bc4bf">(</span>ek <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">&amp;&amp;</span> key<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">equals</span><span style="color:#5bc4bf">(</span>ek<span style="color:#5bc4bf">))))</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>                                oldVal <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">val</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>                                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(!</span>onlyIfAbsent<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>                                    e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">val</span> <span style="color:#5bc4bf">=</span> value<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>                                <span style="color:#815ba4">break</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>                            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span>                            Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> pred <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">38</span>                            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>e <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">39</span>                                pred<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span> <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;(</span>hash<span style="color:#5bc4bf">,</span> key<span style="color:#5bc4bf">,</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">40</span>                                                          value<span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">41</span>                                <span style="color:#815ba4">break</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">42</span>                            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">43</span>                        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">44</span>                    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">45</span>                    <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>f <span style="color:#815ba4">instanceof</span> TreeBin<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">46</span>                        Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">47</span>                        binCount <span style="color:#5bc4bf">=</span> 2<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">48</span>                        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>p <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">((</span>TreeBin<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;)</span>f<span style="color:#5bc4bf">).</span><span style="color:#06b6ef">putTreeVal</span><span style="color:#5bc4bf">(</span>hash<span style="color:#5bc4bf">,</span> key<span style="color:#5bc4bf">,</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">49</span>                                                              value<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">50</span>                            oldVal <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">val</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">51</span>                            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(!</span>onlyIfAbsent<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">52</span>                                p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">val</span> <span style="color:#5bc4bf">=</span> value<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">53</span>                        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">54</span>                    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">55</span>                <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">56</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">57</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>binCount <span style="color:#5bc4bf">!=</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">58</span>                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>binCount <span style="color:#5bc4bf">&gt;=</span> TREEIFY_THRESHOLD<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">59</span>                    treeifyBin<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> i<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">60</span>                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>oldVal <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">61</span>                    <span style="color:#815ba4">return</span> oldVal<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">62</span>                <span style="color:#815ba4">break</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">63</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">64</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">65</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">66</span>    addCount<span style="color:#5bc4bf">(</span>1L<span style="color:#5bc4bf">,</span> binCount<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">67</span>    <span style="color:#815ba4">return</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">68</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>这个 put 的过程很清晰，对当前的 table 进行无条件自循环直到 put 成功，可以分成以下六步流程：</p>
+<ol>
+<li>如果没有初始化就先调用 initTable() 方法来进行初始化；</li>
+<li>如果没有hash冲突就直接<code>CAS</code>插入；</li>
+<li>如果还在进行扩容操作就先进行扩容；</li>
+<li>如果存在 hash 冲突，就加锁来保证线程安全，这里有两种情况，一种是链表形式就直接遍历到尾端插入，一种是红黑树就按照红黑树结构插入；</li>
+<li>最后一个如果 hash 冲突时会形成 Node 链表，在链表长度超过8，Node 数组超过64时会将链表结构转换为红黑树的结构，break再一次进入循环；</li>
+<li>如果添加成功就调用 addCount() 方法统计size，并且检查是否需要扩容。</li>
+</ol>
+<p>现在来对每一步的细节进行源码分析，在第一步中，符合条件会进行初始化操作，我们来看看 initTable() 方法：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">final</span> Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> <span style="color:#06b6ef">initTable</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> tab<span style="color:#5bc4bf">;</span> <span style="color:#fec418">int</span> sc<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#815ba4">while</span> <span style="color:#5bc4bf">((</span>tab <span style="color:#5bc4bf">=</span> table<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">||</span> tab<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">length</span> <span style="color:#5bc4bf">==</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>sc <span style="color:#5bc4bf">=</span> sizeCtl<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&lt;</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>            Thread<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">yield</span><span style="color:#5bc4bf">();</span> <span style="color:#776e71">// lost initialization race; just spin
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#776e71"></span>        <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>U<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">compareAndSwapInt</span><span style="color:#5bc4bf">(</span><span style="color:#815ba4">this</span><span style="color:#5bc4bf">,</span> SIZECTL<span style="color:#5bc4bf">,</span> sc<span style="color:#5bc4bf">,</span> <span style="color:#5bc4bf">-</span>1<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>            <span style="color:#815ba4">try</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>tab <span style="color:#5bc4bf">=</span> table<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">||</span> tab<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">length</span> <span style="color:#5bc4bf">==</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>                    <span style="color:#fec418">int</span> n <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>sc <span style="color:#5bc4bf">&gt;</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">?</span> sc <span style="color:#5bc4bf">:</span> DEFAULT_CAPACITY<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>                    <span style="color:#5bc4bf">@SuppressWarnings</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;unchecked&#34;</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>                    Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> nt <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[])</span><span style="color:#815ba4">new</span> Node<span style="color:#5bc4bf">&lt;?,?&gt;[</span>n<span style="color:#5bc4bf">];</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>                    table <span style="color:#5bc4bf">=</span> tab <span style="color:#5bc4bf">=</span> nt<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>                    sc <span style="color:#5bc4bf">=</span> n <span style="color:#5bc4bf">-</span> <span style="color:#5bc4bf">(</span>n <span style="color:#5bc4bf">&gt;&gt;&gt;</span> 2<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>                <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>            <span style="color:#5bc4bf">}</span> <span style="color:#815ba4">finally</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>                sizeCtl <span style="color:#5bc4bf">=</span> sc<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>            <span style="color:#815ba4">break</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>    <span style="color:#815ba4">return</span> tab<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>在第二步中没有 hash 冲突就直接调用Unsafe的方法CAS插入该元素，进入第三步如果容器正在扩容，则会调用helpTransfer() 方法帮助扩容，现在我们跟进 helpTransfer() 方法看看：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">final</span> Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> <span style="color:#06b6ef">helpTransfer</span><span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> tab<span style="color:#5bc4bf">,</span> Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> f<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> nextTab<span style="color:#5bc4bf">;</span> <span style="color:#fec418">int</span> sc<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>tab <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">&amp;&amp;</span> <span style="color:#5bc4bf">(</span>f <span style="color:#815ba4">instanceof</span> ForwardingNode<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&amp;&amp;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>        <span style="color:#5bc4bf">(</span>nextTab <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">((</span>ForwardingNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;)</span>f<span style="color:#5bc4bf">).</span><span style="color:#06b6ef">nextTable</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>        <span style="color:#fec418">int</span> rs <span style="color:#5bc4bf">=</span> resizeStamp<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">length</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>        <span style="color:#815ba4">while</span> <span style="color:#5bc4bf">(</span>nextTab <span style="color:#5bc4bf">==</span> nextTable <span style="color:#5bc4bf">&amp;&amp;</span> table <span style="color:#5bc4bf">==</span> tab <span style="color:#5bc4bf">&amp;&amp;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>               <span style="color:#5bc4bf">(</span>sc <span style="color:#5bc4bf">=</span> sizeCtl<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&lt;</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>sc <span style="color:#5bc4bf">&gt;&gt;&gt;</span> RESIZE_STAMP_SHIFT<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">!=</span> rs <span style="color:#5bc4bf">||</span> sc <span style="color:#5bc4bf">==</span> rs <span style="color:#5bc4bf">+</span> 1 <span style="color:#5bc4bf">||</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>                sc <span style="color:#5bc4bf">==</span> rs <span style="color:#5bc4bf">+</span> MAX_RESIZERS <span style="color:#5bc4bf">||</span> transferIndex <span style="color:#5bc4bf">&lt;=</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>                <span style="color:#815ba4">break</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>U<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">compareAndSwapInt</span><span style="color:#5bc4bf">(</span><span style="color:#815ba4">this</span><span style="color:#5bc4bf">,</span> SIZECTL<span style="color:#5bc4bf">,</span> sc<span style="color:#5bc4bf">,</span> sc <span style="color:#5bc4bf">+</span> 1<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>                transfer<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> nextTab<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>                <span style="color:#815ba4">break</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>        <span style="color:#815ba4">return</span> nextTab<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>    <span style="color:#815ba4">return</span> table<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>其实 helpTransfer() 方法的目的就是调用多个工作线程一起帮助进行扩容，这样的效率就会更高，而不是只有检查到要扩容的那个线程进行扩容操作，其他线程等待扩容操作完成才能工作，既然这里涉及到扩容的操作，我们也一起来看看扩容方法 transfer()</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">final</span> <span style="color:#fec418">void</span> <span style="color:#06b6ef">transfer</span><span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> tab<span style="color:#5bc4bf">,</span> Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> nextTab<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2</span>    <span style="color:#fec418">int</span> n <span style="color:#5bc4bf">=</span> tab<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">length</span><span style="color:#5bc4bf">,</span> stride<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3</span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>stride <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>NCPU <span style="color:#5bc4bf">&gt;</span> 1<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">?</span> <span style="color:#5bc4bf">(</span>n <span style="color:#5bc4bf">&gt;&gt;&gt;</span> 3<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">/</span> NCPU <span style="color:#5bc4bf">:</span> n<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&lt;</span> MIN_TRANSFER_STRIDE<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4</span>        stride <span style="color:#5bc4bf">=</span> MIN_TRANSFER_STRIDE<span style="color:#5bc4bf">;</span> <span style="color:#776e71">// subdivide range
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5</span><span style="color:#776e71"></span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>nextTab <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>            <span style="color:#776e71">// initiating
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6</span><span style="color:#776e71"></span>        <span style="color:#815ba4">try</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7</span>            <span style="color:#5bc4bf">@SuppressWarnings</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;unchecked&#34;</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8</span>            Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> nt <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[])</span><span style="color:#815ba4">new</span> Node<span style="color:#5bc4bf">&lt;?,?&gt;[</span>n <span style="color:#5bc4bf">&lt;&lt;</span> 1<span style="color:#5bc4bf">];</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9</span>            nextTab <span style="color:#5bc4bf">=</span> nt<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10</span>        <span style="color:#5bc4bf">}</span> <span style="color:#815ba4">catch</span> <span style="color:#5bc4bf">(</span>Throwable ex<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>      <span style="color:#776e71">// try to cope with OOME
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11</span><span style="color:#776e71"></span>            sizeCtl <span style="color:#5bc4bf">=</span> Integer<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">MAX_VALUE</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12</span>            <span style="color:#815ba4">return</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14</span>        nextTable <span style="color:#5bc4bf">=</span> nextTab<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15</span>        transferIndex <span style="color:#5bc4bf">=</span> n<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17</span>    <span style="color:#fec418">int</span> nextn <span style="color:#5bc4bf">=</span> nextTab<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">length</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18</span>    ForwardingNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> fwd <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> ForwardingNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;(</span>nextTab<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19</span>    <span style="color:#fec418">boolean</span> advance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">true</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20</span>    <span style="color:#fec418">boolean</span> finishing <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">false</span><span style="color:#5bc4bf">;</span> <span style="color:#776e71">// to ensure sweep before committing nextTab
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21</span><span style="color:#776e71"></span>    <span style="color:#815ba4">for</span> <span style="color:#5bc4bf">(</span><span style="color:#fec418">int</span> i <span style="color:#5bc4bf">=</span> 0<span style="color:#5bc4bf">,</span> bound <span style="color:#5bc4bf">=</span> 0<span style="color:#5bc4bf">;;)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22</span>        Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> f<span style="color:#5bc4bf">;</span> <span style="color:#fec418">int</span> fh<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23</span>        <span style="color:#815ba4">while</span> <span style="color:#5bc4bf">(</span>advance<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24</span>            <span style="color:#fec418">int</span> nextIndex<span style="color:#5bc4bf">,</span> nextBound<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(--</span>i <span style="color:#5bc4bf">&gt;=</span> bound <span style="color:#5bc4bf">||</span> finishing<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26</span>                advance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">false</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27</span>            <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>nextIndex <span style="color:#5bc4bf">=</span> transferIndex<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&lt;=</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28</span>                i <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">-</span>1<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29</span>                advance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">false</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31</span>            <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>U<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">compareAndSwapInt</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32</span>                     <span style="color:#5bc4bf">(</span><span style="color:#815ba4">this</span><span style="color:#5bc4bf">,</span> TRANSFERINDEX<span style="color:#5bc4bf">,</span> nextIndex<span style="color:#5bc4bf">,</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33</span>                      nextBound <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>nextIndex <span style="color:#5bc4bf">&gt;</span> stride <span style="color:#5bc4bf">?</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34</span>                                   nextIndex <span style="color:#5bc4bf">-</span> stride <span style="color:#5bc4bf">:</span> 0<span style="color:#5bc4bf">)))</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35</span>                bound <span style="color:#5bc4bf">=</span> nextBound<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36</span>                i <span style="color:#5bc4bf">=</span> nextIndex <span style="color:#5bc4bf">-</span> 1<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37</span>                advance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">false</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>i <span style="color:#5bc4bf">&lt;</span> 0 <span style="color:#5bc4bf">||</span> i <span style="color:#5bc4bf">&gt;=</span> n <span style="color:#5bc4bf">||</span> i <span style="color:#5bc4bf">+</span> n <span style="color:#5bc4bf">&gt;=</span> nextn<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41</span>            <span style="color:#fec418">int</span> sc<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>finishing<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43</span>                nextTable <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44</span>                table <span style="color:#5bc4bf">=</span> nextTab<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45</span>                sizeCtl <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>n <span style="color:#5bc4bf">&lt;&lt;</span> 1<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">-</span> <span style="color:#5bc4bf">(</span>n <span style="color:#5bc4bf">&gt;&gt;&gt;</span> 1<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46</span>                <span style="color:#815ba4">return</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>U<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">compareAndSwapInt</span><span style="color:#5bc4bf">(</span><span style="color:#815ba4">this</span><span style="color:#5bc4bf">,</span> SIZECTL<span style="color:#5bc4bf">,</span> sc <span style="color:#5bc4bf">=</span> sizeCtl<span style="color:#5bc4bf">,</span> sc <span style="color:#5bc4bf">-</span> 1<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49</span>                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>sc <span style="color:#5bc4bf">-</span> 2<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">!=</span> resizeStamp<span style="color:#5bc4bf">(</span>n<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&lt;&lt;</span> RESIZE_STAMP_SHIFT<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50</span>                    <span style="color:#815ba4">return</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51</span>                finishing <span style="color:#5bc4bf">=</span> advance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">true</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52</span>                i <span style="color:#5bc4bf">=</span> n<span style="color:#5bc4bf">;</span> <span style="color:#776e71">// recheck before commit
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53</span><span style="color:#776e71"></span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55</span>        <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>f <span style="color:#5bc4bf">=</span> tabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> i<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56</span>            advance <span style="color:#5bc4bf">=</span> casTabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> i<span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">,</span> fwd<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57</span>        <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>fh <span style="color:#5bc4bf">=</span> f<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> MOVED<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58</span>            advance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">true</span><span style="color:#5bc4bf">;</span> <span style="color:#776e71">// already processed
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59</span><span style="color:#776e71"></span>        <span style="color:#815ba4">else</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60</span>            <span style="color:#815ba4">synchronized</span> <span style="color:#5bc4bf">(</span>f<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61</span>                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>tabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> i<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> f<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62</span>                    Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> ln<span style="color:#5bc4bf">,</span> hn<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63</span>                    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>fh <span style="color:#5bc4bf">&gt;=</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64</span>                        <span style="color:#fec418">int</span> runBit <span style="color:#5bc4bf">=</span> fh <span style="color:#5bc4bf">&amp;</span> n<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65</span>                        Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> lastRun <span style="color:#5bc4bf">=</span> f<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66</span>                        <span style="color:#815ba4">for</span> <span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> p <span style="color:#5bc4bf">=</span> f<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">;</span> p <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span> p <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67</span>                            <span style="color:#fec418">int</span> b <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span> <span style="color:#5bc4bf">&amp;</span> n<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68</span>                            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>b <span style="color:#5bc4bf">!=</span> runBit<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69</span>                                runBit <span style="color:#5bc4bf">=</span> b<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70</span>                                lastRun <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71</span>                            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72</span>                        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73</span>                        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>runBit <span style="color:#5bc4bf">==</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74</span>                            ln <span style="color:#5bc4bf">=</span> lastRun<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75</span>                            hn <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76</span>                        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77</span>                        <span style="color:#815ba4">else</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78</span>                            hn <span style="color:#5bc4bf">=</span> lastRun<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79</span>                            ln <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80</span>                        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81</span>                        <span style="color:#815ba4">for</span> <span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> p <span style="color:#5bc4bf">=</span> f<span style="color:#5bc4bf">;</span> p <span style="color:#5bc4bf">!=</span> lastRun<span style="color:#5bc4bf">;</span> p <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82</span>                            <span style="color:#fec418">int</span> ph <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span><span style="color:#5bc4bf">;</span> K pk <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span><span style="color:#5bc4bf">;</span> V pv <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">val</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83</span>                            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>ph <span style="color:#5bc4bf">&amp;</span> n<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84</span>                                ln <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;(</span>ph<span style="color:#5bc4bf">,</span> pk<span style="color:#5bc4bf">,</span> pv<span style="color:#5bc4bf">,</span> ln<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85</span>                            <span style="color:#815ba4">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86</span>                                hn <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;(</span>ph<span style="color:#5bc4bf">,</span> pk<span style="color:#5bc4bf">,</span> pv<span style="color:#5bc4bf">,</span> hn<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87</span>                        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88</span>                        setTabAt<span style="color:#5bc4bf">(</span>nextTab<span style="color:#5bc4bf">,</span> i<span style="color:#5bc4bf">,</span> ln<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89</span>                        setTabAt<span style="color:#5bc4bf">(</span>nextTab<span style="color:#5bc4bf">,</span> i <span style="color:#5bc4bf">+</span> n<span style="color:#5bc4bf">,</span> hn<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90</span>                        setTabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> i<span style="color:#5bc4bf">,</span> fwd<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91</span>                        advance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">true</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92</span>                    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93</span>                    <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>f <span style="color:#815ba4">instanceof</span> TreeBin<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94</span>                        TreeBin<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> t <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>TreeBin<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;)</span>f<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95</span>                        TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> lo <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">,</span> loTail <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96</span>                        TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> hi <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">,</span> hiTail <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97</span>                        <span style="color:#fec418">int</span> lc <span style="color:#5bc4bf">=</span> 0<span style="color:#5bc4bf">,</span> hc <span style="color:#5bc4bf">=</span> 0<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98</span>                        <span style="color:#815ba4">for</span> <span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> e <span style="color:#5bc4bf">=</span> t<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">first</span><span style="color:#5bc4bf">;</span> e <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span> e <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99</span>                            <span style="color:#fec418">int</span> h <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100</span>                            TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> p <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101</span>                                <span style="color:#5bc4bf">(</span>h<span style="color:#5bc4bf">,</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span><span style="color:#5bc4bf">,</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">val</span><span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102</span>                            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>h <span style="color:#5bc4bf">&amp;</span> n<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103</span>                                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">prev</span> <span style="color:#5bc4bf">=</span> loTail<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">104</span>                                    lo <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">105</span>                                <span style="color:#815ba4">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">106</span>                                    loTail<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span> <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">107</span>                                loTail <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">108</span>                                <span style="color:#5bc4bf">++</span>lc<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">109</span>                            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">110</span>                            <span style="color:#815ba4">else</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">111</span>                                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">prev</span> <span style="color:#5bc4bf">=</span> hiTail<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">112</span>                                    hi <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">113</span>                                <span style="color:#815ba4">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">114</span>                                    hiTail<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span> <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">115</span>                                hiTail <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">116</span>                                <span style="color:#5bc4bf">++</span>hc<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">117</span>                            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">118</span>                        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">119</span>                        ln <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>lc <span style="color:#5bc4bf">&lt;=</span> UNTREEIFY_THRESHOLD<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">?</span> untreeify<span style="color:#5bc4bf">(</span>lo<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">:</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">120</span>                        <span style="color:#5bc4bf">(</span>hc <span style="color:#5bc4bf">!=</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">?</span> <span style="color:#815ba4">new</span> TreeBin<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;(</span>lo<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">:</span> t<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">121</span>                        hn <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>hc <span style="color:#5bc4bf">&lt;=</span> UNTREEIFY_THRESHOLD<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">?</span> untreeify<span style="color:#5bc4bf">(</span>hi<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">:</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">122</span>                        <span style="color:#5bc4bf">(</span>lc <span style="color:#5bc4bf">!=</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">?</span> <span style="color:#815ba4">new</span> TreeBin<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;(</span>hi<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">:</span> t<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">123</span>                        setTabAt<span style="color:#5bc4bf">(</span>nextTab<span style="color:#5bc4bf">,</span> i<span style="color:#5bc4bf">,</span> ln<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">124</span>                        setTabAt<span style="color:#5bc4bf">(</span>nextTab<span style="color:#5bc4bf">,</span> i <span style="color:#5bc4bf">+</span> n<span style="color:#5bc4bf">,</span> hn<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">125</span>                        setTabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> i<span style="color:#5bc4bf">,</span> fwd<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">126</span>                        advance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">true</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">127</span>                    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">128</span>                <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">129</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">130</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">131</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">132</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>扩容过程有点复杂，这里主要涉及到<code>多线程并发扩容</code>，ForwardingNode 的作用就是支持扩容操作，将已处理的节点和空节点置为 ForwardingNode，并发处理时多个线程经过ForwardingNode就表示已经遍历了，就往后遍历。</p>
+<p>介绍完扩容过程，再次回到 put 流程..</p>
+<p>在第四步是向链表或者红黑树里加节点</p>
+<p>第五步调用 treeifyBin() 方法进行链表转红黑树的过程</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">final</span> <span style="color:#fec418">void</span> <span style="color:#06b6ef">treeifyBin</span><span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> tab<span style="color:#5bc4bf">,</span> <span style="color:#fec418">int</span> index<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> b<span style="color:#5bc4bf">;</span> <span style="color:#fec418">int</span> n<span style="color:#5bc4bf">,</span> sc<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>tab <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>n <span style="color:#5bc4bf">=</span> tab<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">length</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&lt;</span> MIN_TREEIFY_CAPACITY<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>            tryPresize<span style="color:#5bc4bf">(</span>n <span style="color:#5bc4bf">&lt;&lt;</span> 1<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>        <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>b <span style="color:#5bc4bf">=</span> tabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> index<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">&amp;&amp;</span> b<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span> <span style="color:#5bc4bf">&gt;=</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>            <span style="color:#815ba4">synchronized</span> <span style="color:#5bc4bf">(</span>b<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>tabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> index<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> b<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>                    TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> hd <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">,</span> tl <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>                    <span style="color:#815ba4">for</span> <span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> e <span style="color:#5bc4bf">=</span> b<span style="color:#5bc4bf">;</span> e <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span> e <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>                        TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> p <span style="color:#5bc4bf">=</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>                            <span style="color:#815ba4">new</span> TreeNode<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;(</span>e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span><span style="color:#5bc4bf">,</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span><span style="color:#5bc4bf">,</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">val</span><span style="color:#5bc4bf">,</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>                                              <span style="color:#815ba4">null</span><span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>                        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">prev</span> <span style="color:#5bc4bf">=</span> tl<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>                            hd <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>                        <span style="color:#815ba4">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>                            tl<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span> <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>                        tl <span style="color:#5bc4bf">=</span> p<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>                    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>                    setTabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> index<span style="color:#5bc4bf">,</span> <span style="color:#815ba4">new</span> TreeBin<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;(</span>hd<span style="color:#5bc4bf">));</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>                <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>到第六步表示已经数据加入成功了，现在调用 addCount() 方法计算 ConcurrentHashMap 的 size，在原来的基础上加一，现在来看看 addCount() 方法</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">final</span> <span style="color:#fec418">void</span> <span style="color:#06b6ef">addCount</span><span style="color:#5bc4bf">(</span><span style="color:#fec418">long</span> x<span style="color:#5bc4bf">,</span> <span style="color:#fec418">int</span> check<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    CounterCell<span style="color:#5bc4bf">[]</span> as<span style="color:#5bc4bf">;</span> <span style="color:#fec418">long</span> b<span style="color:#5bc4bf">,</span> s<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>as <span style="color:#5bc4bf">=</span> counterCells<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">||</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>        <span style="color:#5bc4bf">!</span>U<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">compareAndSwapLong</span><span style="color:#5bc4bf">(</span><span style="color:#815ba4">this</span><span style="color:#5bc4bf">,</span> BASECOUNT<span style="color:#5bc4bf">,</span> b <span style="color:#5bc4bf">=</span> baseCount<span style="color:#5bc4bf">,</span> s <span style="color:#5bc4bf">=</span> b <span style="color:#5bc4bf">+</span> x<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>        CounterCell a<span style="color:#5bc4bf">;</span> <span style="color:#fec418">long</span> v<span style="color:#5bc4bf">;</span> <span style="color:#fec418">int</span> m<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>        <span style="color:#fec418">boolean</span> uncontended <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">true</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>as <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">||</span> <span style="color:#5bc4bf">(</span>m <span style="color:#5bc4bf">=</span> as<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">length</span> <span style="color:#5bc4bf">-</span> 1<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&lt;</span> 0 <span style="color:#5bc4bf">||</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>            <span style="color:#5bc4bf">(</span>a <span style="color:#5bc4bf">=</span> as<span style="color:#5bc4bf">[</span>ThreadLocalRandom<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">getProbe</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">&amp;</span> m<span style="color:#5bc4bf">])</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">||</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>            <span style="color:#5bc4bf">!(</span>uncontended <span style="color:#5bc4bf">=</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>              U<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">compareAndSwapLong</span><span style="color:#5bc4bf">(</span>a<span style="color:#5bc4bf">,</span> CELLVALUE<span style="color:#5bc4bf">,</span> v <span style="color:#5bc4bf">=</span> a<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">value</span><span style="color:#5bc4bf">,</span> v <span style="color:#5bc4bf">+</span> x<span style="color:#5bc4bf">)))</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>            fullAddCount<span style="color:#5bc4bf">(</span>x<span style="color:#5bc4bf">,</span> uncontended<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>            <span style="color:#815ba4">return</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>check <span style="color:#5bc4bf">&lt;=</span> 1<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>            <span style="color:#815ba4">return</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>        s <span style="color:#5bc4bf">=</span> sumCount<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>check <span style="color:#5bc4bf">&gt;=</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>        Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> tab<span style="color:#5bc4bf">,</span> nt<span style="color:#5bc4bf">;</span> <span style="color:#fec418">int</span> n<span style="color:#5bc4bf">,</span> sc<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">20</span>        <span style="color:#815ba4">while</span> <span style="color:#5bc4bf">(</span>s <span style="color:#5bc4bf">&gt;=</span> <span style="color:#5bc4bf">(</span><span style="color:#fec418">long</span><span style="color:#5bc4bf">)(</span>sc <span style="color:#5bc4bf">=</span> sizeCtl<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&amp;&amp;</span> <span style="color:#5bc4bf">(</span>tab <span style="color:#5bc4bf">=</span> table<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">&amp;&amp;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">21</span>               <span style="color:#5bc4bf">(</span>n <span style="color:#5bc4bf">=</span> tab<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">length</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&lt;</span> MAXIMUM_CAPACITY<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">22</span>            <span style="color:#fec418">int</span> rs <span style="color:#5bc4bf">=</span> resizeStamp<span style="color:#5bc4bf">(</span>n<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">23</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>sc <span style="color:#5bc4bf">&lt;</span> 0<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">24</span>                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>sc <span style="color:#5bc4bf">&gt;&gt;&gt;</span> RESIZE_STAMP_SHIFT<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">!=</span> rs <span style="color:#5bc4bf">||</span> sc <span style="color:#5bc4bf">==</span> rs <span style="color:#5bc4bf">+</span> 1 <span style="color:#5bc4bf">||</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">25</span>                    sc <span style="color:#5bc4bf">==</span> rs <span style="color:#5bc4bf">+</span> MAX_RESIZERS <span style="color:#5bc4bf">||</span> <span style="color:#5bc4bf">(</span>nt <span style="color:#5bc4bf">=</span> nextTable<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">||</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">26</span>                    transferIndex <span style="color:#5bc4bf">&lt;=</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">27</span>                    <span style="color:#815ba4">break</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">28</span>                <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>U<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">compareAndSwapInt</span><span style="color:#5bc4bf">(</span><span style="color:#815ba4">this</span><span style="color:#5bc4bf">,</span> SIZECTL<span style="color:#5bc4bf">,</span> sc<span style="color:#5bc4bf">,</span> sc <span style="color:#5bc4bf">+</span> 1<span style="color:#5bc4bf">))</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">29</span>                    transfer<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> nt<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">30</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">31</span>            <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>U<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">compareAndSwapInt</span><span style="color:#5bc4bf">(</span><span style="color:#815ba4">this</span><span style="color:#5bc4bf">,</span> SIZECTL<span style="color:#5bc4bf">,</span> sc<span style="color:#5bc4bf">,</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">32</span>                                         <span style="color:#5bc4bf">(</span>rs <span style="color:#5bc4bf">&lt;&lt;</span> RESIZE_STAMP_SHIFT<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">+</span> 2<span style="color:#5bc4bf">))</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">33</span>                transfer<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">34</span>            s <span style="color:#5bc4bf">=</span> sumCount<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">35</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">36</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">37</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>put 的流程现在已经分析完了，可以发现，它在并发处理中使用的是乐观锁，当有冲突的时候才进行并发处理，而且流程步骤很清晰，但是细节设计的很复杂，毕竟多线程的场景也复杂。</p>
+<h3 id="获取元素">获取元素</h3>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">public</span> V <span style="color:#06b6ef">get</span><span style="color:#5bc4bf">(</span>Object key<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;[]</span> tab<span style="color:#5bc4bf">;</span> Node<span style="color:#5bc4bf">&lt;</span>K<span style="color:#5bc4bf">,</span>V<span style="color:#5bc4bf">&gt;</span> e<span style="color:#5bc4bf">,</span> p<span style="color:#5bc4bf">;</span> <span style="color:#fec418">int</span> n<span style="color:#5bc4bf">,</span> eh<span style="color:#5bc4bf">;</span> K ek<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#fec418">int</span> h <span style="color:#5bc4bf">=</span> spread<span style="color:#5bc4bf">(</span>key<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hashCode</span><span style="color:#5bc4bf">());</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>tab <span style="color:#5bc4bf">=</span> table<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">&amp;&amp;</span> <span style="color:#5bc4bf">(</span>n <span style="color:#5bc4bf">=</span> tab<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">length</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&gt;</span> 0 <span style="color:#5bc4bf">&amp;&amp;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>        <span style="color:#5bc4bf">(</span>e <span style="color:#5bc4bf">=</span> tabAt<span style="color:#5bc4bf">(</span>tab<span style="color:#5bc4bf">,</span> <span style="color:#5bc4bf">(</span>n <span style="color:#5bc4bf">-</span> 1<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">&amp;</span> h<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>eh <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> h<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>ek <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> key <span style="color:#5bc4bf">||</span> <span style="color:#5bc4bf">(</span>ek <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">&amp;&amp;</span> key<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">equals</span><span style="color:#5bc4bf">(</span>ek<span style="color:#5bc4bf">)))</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>                <span style="color:#815ba4">return</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">val</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>        <span style="color:#815ba4">else</span> <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>eh <span style="color:#5bc4bf">&lt;</span> 0<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>            <span style="color:#815ba4">return</span> <span style="color:#5bc4bf">(</span>p <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">find</span><span style="color:#5bc4bf">(</span>h<span style="color:#5bc4bf">,</span> key<span style="color:#5bc4bf">))</span> <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">?</span> p<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">val</span> <span style="color:#5bc4bf">:</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>        <span style="color:#815ba4">while</span> <span style="color:#5bc4bf">((</span>e <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hash</span> <span style="color:#5bc4bf">==</span> h <span style="color:#5bc4bf">&amp;&amp;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>                <span style="color:#5bc4bf">((</span>ek <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">key</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">==</span> key <span style="color:#5bc4bf">||</span> <span style="color:#5bc4bf">(</span>ek <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">&amp;&amp;</span> key<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">equals</span><span style="color:#5bc4bf">(</span>ek<span style="color:#5bc4bf">))))</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>                <span style="color:#815ba4">return</span> e<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">val</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span>    <span style="color:#815ba4">return</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>ConcurrentHashMap 的 get 操作的流程很简单，也很清晰，可以分为三个步骤来描述</p>
+<ol>
+<li>计算hash值，定位到该table索引位置，如果是首节点符合就返回</li>
+<li>如果遇到扩容的时候，会调用标志正在扩容节点ForwardingNode的find方法，查找该节点，匹配就返回</li>
+<li>以上都不符合的话，就往下遍历节点，匹配就返回，否则最后就返回null</li>
+</ol>
+<h3 id="size方法">size()方法</h3>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">public</span> <span style="color:#fec418">int</span> <span style="color:#06b6ef">size</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    <span style="color:#fec418">long</span> n <span style="color:#5bc4bf">=</span> sumCount<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    <span style="color:#815ba4">return</span> <span style="color:#5bc4bf">((</span>n <span style="color:#5bc4bf">&lt;</span> 0L<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">?</span> 0 <span style="color:#5bc4bf">:</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>            <span style="color:#5bc4bf">(</span>n <span style="color:#5bc4bf">&gt;</span> <span style="color:#5bc4bf">(</span><span style="color:#fec418">long</span><span style="color:#5bc4bf">)</span>Integer<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">MAX_VALUE</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">?</span> Integer<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">MAX_VALUE</span> <span style="color:#5bc4bf">:</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>            <span style="color:#5bc4bf">(</span><span style="color:#fec418">int</span><span style="color:#5bc4bf">)</span>n<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#815ba4">final</span> <span style="color:#fec418">long</span> <span style="color:#06b6ef">sumCount</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>    CounterCell<span style="color:#5bc4bf">[]</span> as <span style="color:#5bc4bf">=</span> counterCells<span style="color:#5bc4bf">;</span> CounterCell a<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    <span style="color:#fec418">long</span> sum <span style="color:#5bc4bf">=</span> baseCount<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>as <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>        <span style="color:#815ba4">for</span> <span style="color:#5bc4bf">(</span><span style="color:#fec418">int</span> i <span style="color:#5bc4bf">=</span> 0<span style="color:#5bc4bf">;</span> i <span style="color:#5bc4bf">&lt;</span> as<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">length</span><span style="color:#5bc4bf">;</span> <span style="color:#5bc4bf">++</span>i<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>            <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">((</span>a <span style="color:#5bc4bf">=</span> as<span style="color:#5bc4bf">[</span>i<span style="color:#5bc4bf">])</span> <span style="color:#5bc4bf">!=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>                sum <span style="color:#5bc4bf">+=</span> a<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">value</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    <span style="color:#815ba4">return</span> sum<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>在 JDK1.8 版本中，对于 size 的计算，在扩容和addCount()方法就已经有处理了，JDK1.7是在调用size()方法才去计算，其实在并发集合中去计算size是没有多大的意义的，因为size是实时在变的，只能计算某一刻的大小，但是某一刻太快了，人的感知是一个时间段，所以并不是很精确。</p>
+<h3 id="总结">总结</h3>
+<p>其实可以看出JDK1.8版本的 ConcurrentHashMap 的数据结构已经接近HashMap，相对而言，ConcurrentHashMap只是增加了同步的操作来控制并发，从JDK1.7版本的<code>ReentrantLock+Segment+HashEntry</code>，到JDK1.8版本中<code>synchronized+CAS+HashEntry+红黑树</code>，相对而言，总结如下思考：</p>
+<ol>
+<li>
+<p>JDK1.8 的实现降低锁的粒度，JDK1.7版本锁的粒度是基于Segment的，包含多个HashEntry，而JDK1.8锁的粒度就是HashEntry（首节点）</p>
+</li>
+<li>
+<p>JDK1.8 版本的数据结构变得更加简单，使得操作也更加清晰流畅，因为已经使用 synchronized 来进行同步，所以不需要分段锁的概念，也就不需要 Segment 这种数据结构了，由于粒度的降低，实现的复杂度也增加了</p>
+</li>
+<li>
+<p>JDK1.8 使用红黑树来优化链表，基于长度很长的链表的遍历是一个很漫长的过程，而红黑树的遍历效率是很快的，代替一定阈值的链表，这样形成一个最佳拍档</p>
+</li>
+<li>
+<p>JDK1.8 为什么使用内置锁 synchronized 来代替重入锁 ReentrantLock，我觉得有以下几点：</p>
+<ul>
+<li>因为粒度降低了。在粗粒度加锁中 ReentrantLock 可能通过 Condition 来控制各个低粒度的边界，更加的灵活；低粒度加锁方式下，Condition的优势就没有了，因此 synchronized 并不比 ReentrantLock 差；</li>
+</ul>
+<ol>
+<li>JVM 的开发团队从来都没有放弃 synchronized，而且基于 JVM 的 synchronized 优化空间更大，使用内嵌的关键字比使用 API 更加自然；</li>
+<li>在大量的数据操作下，对于 JVM 的内存压力，基于 API 的 ReentrantLock 会开销更多的内存，虽然不是瓶颈，但是也是一个选择依据。</li>
+</ol>
+</li>
+</ol>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">Java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/source/" rel="tag">source</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Hory avatar" src="/img/gitHubOlder.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Hory</span>
+	</div>
+	<div class="authorbox__description">
+		Contact Me: <a href="mailto:HoryChang@163.com">HoryChang@163.com</a>
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/hashmap/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">HashMap</p>
+		</a>
+	</div>
+</nav>
+
+
+
+		</div>
+		<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://horycloud.github.io/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/concurrenthashmap/">ConcurrentHashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/hashmap/">HashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/hashset/">HashSet</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/linkedhashmap/">LinkedHashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/linkedlist/">LinkedList</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java-collection/">Java Collection</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="Java">Java (7)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source/" title="source">source (7)</a>
+	</div>
+</div>
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:HoryChange@163.com">
+				<svg class="widget-social__link-icon icon icon-mail" width="24" height="24" viewBox="0 0 416 288"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>HoryChange@163.com</span>
+			</a>
+		</div>
+
+		
+	</div>
+</div>
+</aside>
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 DGSP local group.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			<span><a href="/imprint">Imprint and Privacy</a></span>
+		</div>
+		
+<div class="footer__copyright">Donate!</div>
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

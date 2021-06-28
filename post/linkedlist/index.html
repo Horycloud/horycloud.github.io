@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>LinkedList - Hugo DPSG</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="LinkedList" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://horycloud.github.io/post/linkedlist/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-06-28T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-06-28T00:00:00&#43;00:00" />
+
+
+		<meta itemprop="name" content="LinkedList">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2021-06-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="814">
+<meta itemprop="keywords" content="Java,source," />
+		<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="LinkedList"/>
+<meta name="twitter:description" content=""/>
+
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="https://horycloud.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo logo--mixed">
+		<div class="container">
+			<a class="logo__link" href="/" title="HORY BLOG" rel="home">
+				<div class="logo__item logo__imagebox">
+						<img class="logo__img" src="/img/placeholder.png">
+					</div><div class="logo__item logo__text">
+						<div class="logo__title">HORY BLOG</div>
+						<div class="logo__tagline">Welcome to my site</div>
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+
+<nav class="menu">
+	<div class="container">
+		<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+			<span class="menu__btn-title" tabindex="-1">Menu</span>
+		</button>
+		<ul class="menu__list">
+			<li class="menu__item">
+				<a class="menu__link" href="/">
+					
+					<span class="menu__text">Home</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="/about/">
+					
+					<span class="menu__text">About</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://gitee.com/HoryCloud">
+					
+					<span class="menu__text">Gitee</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://github.com/Horycloud">
+					
+					<span class="menu__text">GitHub</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://blog.csdn.net/weixin_44471490">
+					
+					<span class="menu__text">CSDN</span>
+					
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">LinkedList</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Hory</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-06-28T00:00:00Z">28.06.2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/java-collection/" rel="category">Java Collection</a>
+	</span>
+</div></div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+        <li><a href="#字段属性">字段属性</a></li>
+        <li><a href="#构造函数">构造函数</a></li>
+        <li><a href="#添加元素">添加元素</a></li>
+        <li><a href="#删除元素">删除元素</a></li>
+        <li><a href="#修改元素">修改元素</a></li>
+        <li><a href="#查找元素">查找元素</a></li>
+        <li><a href="#遍历集合">遍历集合</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h3 id="简介">简介</h3>
+<p>LinkedList 这个集合的底层是一个链表，特点是元素有序且可以重复。</p>
+<p>类定义如下：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#815ba4">public</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">LinkedList</span><span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>    <span style="color:#815ba4">extends</span> AbstractSequentialList<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>    <span style="color:#815ba4">implements</span> List<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;,</span> Deque<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;,</span> Cloneable<span style="color:#5bc4bf">,</span> java<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">io</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">Serializable</span> <span style="color:#5bc4bf">{}</span>
+</code></pre></div><p>和 ArrayList 集合一样，LinkedList 集合也实现了 Cloneable 接口和 Serializable 接口，分别用来支持克隆以及支持序列化。List 接口也不用多说，定义了一套 List 集合类型的方法规范。</p>
+<p>注意，相对于 ArrayList 集合，LinkedList 集合多实现了一个 <code>Deque</code> 接口，这是一个双向队列接口，双向队列就是两端都可以进行增加和删除操作。</p>
+<h3 id="字段属性">字段属性</h3>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#776e71">// 元素（节点）的个数
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span><span style="color:#776e71"></span><span style="color:#815ba4">transient</span> <span style="color:#fec418">int</span> size <span style="color:#5bc4bf">=</span> 0<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span style="color:#776e71">// 指向第一个节点的指针
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span><span style="color:#776e71"></span><span style="color:#815ba4">transient</span> Node<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> first<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span><span style="color:#776e71">// 指向最后一个节点的指针
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8</span><span style="color:#776e71"></span><span style="color:#815ba4">transient</span> Node<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> last<span style="color:#5bc4bf">;</span>
+</code></pre></div><p>其中 Node 类是 LinkedList 类中的一个内部类，其中每一个元素代表一个 Node 类对象。</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">static</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">Node</span><span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>    E item<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>    Node<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> next<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>    Node<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> prev<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>    Node<span style="color:#5bc4bf">(</span>Node<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> prev<span style="color:#5bc4bf">,</span> E element<span style="color:#5bc4bf">,</span> Node<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> next<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>        <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">item</span> <span style="color:#5bc4bf">=</span> element<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>        <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span> <span style="color:#5bc4bf">=</span> next<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>        <span style="color:#815ba4">this</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">prev</span> <span style="color:#5bc4bf">=</span> prev<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>在这个 Node 类中有 next 和 prev 指针，分别指向链表中上一个 node 和下一个 node</p>
+<h3 id="构造函数">构造函数</h3>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#815ba4">public</span> <span style="color:#06b6ef">LinkedList</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span><span style="color:#815ba4">public</span> <span style="color:#06b6ef">LinkedList</span><span style="color:#5bc4bf">(</span>Collection<span style="color:#5bc4bf">&lt;?</span> <span style="color:#815ba4">extends</span> E<span style="color:#5bc4bf">&gt;</span> c<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>    <span style="color:#815ba4">this</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>    addAll<span style="color:#5bc4bf">(</span>c<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>LinkedList 有两个构造函数，第一个是默认的空的构造函数，第二个是将已有元素的集合 Collection 的实例添加到 LinkedList 中，调用的是 addAll() 方法，这个方法下面我们会介绍。</p>
+<p>注意：LinkedList 是没有初始化链表大小的构造函数，因为链表不像数组，一个定义好的数组是必须要有确定的大小，然后去分配内存空间，而链表不一样，它没有确定的大小，通过指针的移动来指向下一个内存地址的分配。</p>
+<h3 id="添加元素">添加元素</h3>
+<ul>
+<li>LinkedList 是没有虚节点的，第一个结点 prev 指向 null</li>
+</ul>
+<p><code>addFirst(E e)</code>：将指定元素添加到链表头</p>
+<p><code>addLast(E e) / add(E e)</code>：将指定元素添加到链表尾部</p>
+<p><code>add(int index, E element)</code>：将指定的元素插入此链表中的指定位置</p>
+<p><code>addAll(Collection&lt;? extends E&gt; c)</code>：按照指定集合的迭代器返回的顺序，将指定集合c中的所有元素追加到此链表的末尾</p>
+<p><code>addAll(int index, Collection&lt;? extends E&gt; c)</code>：将集合 c 中所有元素插入到指定索引的位置。</p>
+<ul>
+<li>其实 addAll(Collection&lt;? extends E&gt; c) == addAll(size, Collection&lt;? extends E&gt; c)</li>
+</ul>
+<p>以上就是 LinkedList 集合中添加元素的各种方式，可以发现 LinkedList 每次添加元素只是改变元素的上一个指针引用和下一个指针引用，而且没有扩容。对比于 ArrayList ，是需要扩容的，而且在中间插入元素时，后面的所有元素都要移动一位，两者插入元素时的效率差异很大。</p>
+<p>每次进行添加操作，都有modCount++ 的操作。</p>
+<h3 id="删除元素">删除元素</h3>
+<p>删除元素和添加元素一样，也是通过更改指向上一个节点和指向下一个节点的引用即可，这里就不作图形展示了。</p>
+<p><code>remove() / removeFirst()</code>：从列表中移除并返回第一个元素</p>
+<p><code>removeLast()</code>：从列表中移除并返回最后一个元素</p>
+<p><code>remove(int index)</code>：删除此链表中指定位置的元素，返回该元素</p>
+<p><code>remove(Object o)</code>：如果存在，则从该链表中删除第一次出现的指定元素</p>
+<ul>
+<li>此方法本质上和 remove(int index) 没多大区别，都是通过循环判断元素进行删除，需要注意的是，remove(Object o) 是只删除第一次出现的元素。</li>
+</ul>
+<h3 id="修改元素">修改元素</h3>
+<p><code>set(int index, E element)</code> ：用指定的元素替换此列表中指定位置的元素。</p>
+<p>这里主要是通过 node(index) 方法获取指定索引位置的节点，然后修改此节点位置的元素即可。</p>
+<h3 id="查找元素">查找元素</h3>
+<p><code>getFirst()</code>：返回此链表中的第一个元素</p>
+<p><code>getLast()</code>：返回此链表中的最后一个元素</p>
+<p><code>get(int index)</code>：返回指定索引处的元素</p>
+<p><code>indexOf(Object o)</code>：返回此链表中指定元素第一次出现的索引，如果此链表不包含元素，则返回-1</p>
+<h3 id="遍历集合">遍历集合</h3>
+<p>先说区别：</p>
+<ul>
+<li>
+<p>普通for循环：每次遍历一个索引的元素之前，都要访问之前所有的索引。</p>
+</li>
+<li>
+<p>每次访问一个元素后，都会用游标记录当前访问元素的位置，遍历一个元素，记录一个位置。</p>
+</li>
+</ul>
+<blockquote>
+<p>普通 for 循环</p>
+</blockquote>
+<p>如下：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>LinkedList<span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">&gt;</span> linkedList <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> LinkedList<span style="color:#5bc4bf">&lt;&gt;();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;A&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;B&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;C&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;D&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span style="color:#815ba4">for</span><span style="color:#5bc4bf">(</span><span style="color:#fec418">int</span> i <span style="color:#5bc4bf">=</span> 0 <span style="color:#5bc4bf">;</span> i <span style="color:#5bc4bf">&lt;</span> linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">size</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">;</span> i<span style="color:#5bc4bf">++){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span>    System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">print</span><span style="color:#5bc4bf">(</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">get</span><span style="color:#5bc4bf">(</span>i<span style="color:#5bc4bf">)+</span><span style="color:#48b685">&#34; &#34;</span><span style="color:#5bc4bf">);</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>需要注意的是， get(int index) 方法每次都要遍历该索引之前的所有元素，这句话这么理解：</p>
+<p>比如上面的一个 LinkedList 集合，放入了 A、B、C、D 四个元素。总共需要四次遍历：</p>
+<ul>
+<li>第一次遍历打印 A：只需遍历一次。</li>
+<li>第二次遍历打印 B：需要先找到 A，然后再找到 B 打印。</li>
+<li>第三次遍历打印 C：需要先找到 A，然后找到 B，最后找到 C 打印。</li>
+<li>第四次遍历打印 D：需要先找到 A，然后找到 B，然后找到 C，最后找到 D。</li>
+</ul>
+<p>也就是说每次调用 get(int index) 方法时，都是从最前面开始依次往后遍历。这样的话如果集合元素很多，越查找到后面（当然此处的get方法进行了优化，查找前半部分从前面开始遍历，查找后半部分从后面开始遍历，但是需要的时间还是很多）花费的时间越多。那么如何改进呢？</p>
+<blockquote>
+<p>迭代器</p>
+</blockquote>
+<p>如下：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>LinkedList<span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">&gt;</span> linkedList <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> LinkedList<span style="color:#5bc4bf">&lt;&gt;();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;A&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;B&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;C&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;D&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#776e71">// 从前往后打印
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#776e71"></span>Iterator<span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">&gt;</span> listIt <span style="color:#5bc4bf">=</span> linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">listIterator</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#815ba4">while</span><span style="color:#5bc4bf">(</span>listIt<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hasNext</span><span style="color:#5bc4bf">()){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>    System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">print</span><span style="color:#5bc4bf">(</span>listIt<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">()+</span><span style="color:#48b685">&#34; &#34;</span><span style="color:#5bc4bf">);</span>  <span style="color:#776e71">// A B C D
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span style="color:#776e71"></span><span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span style="color:#776e71">// 从后往前打印
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span><span style="color:#776e71">// 通过适配器模式实现的接口，作用是倒叙打印链表
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span style="color:#776e71"></span>Iterator<span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">&gt;</span> it <span style="color:#5bc4bf">=</span> linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">descendingIterator</span><span style="color:#5bc4bf">();</span> 
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span><span style="color:#815ba4">while</span><span style="color:#5bc4bf">(</span>it<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hasNext</span><span style="color:#5bc4bf">()){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span>    System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">print</span><span style="color:#5bc4bf">(</span>it<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">()+</span><span style="color:#48b685">&#34; &#34;</span><span style="color:#5bc4bf">);</span>       <span style="color:#776e71">// D C B A
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span style="color:#776e71"></span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>在 LinkedList 集合中也有一个内部类 ListItr，方法实现大体上也差不多，通过移动游标指向每一次要遍历的元素，不用在遍历某个元素之前都要从头开始。其方法实现也比较简单：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  1</span><span style="color:#815ba4">public</span> ListIterator<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> <span style="color:#06b6ef">listIterator</span><span style="color:#5bc4bf">(</span><span style="color:#fec418">int</span> index<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  2</span>    checkPositionIndex<span style="color:#5bc4bf">(</span>index<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  3</span>    <span style="color:#815ba4">return</span> <span style="color:#815ba4">new</span> ListItr<span style="color:#5bc4bf">(</span>index<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  4</span><span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  6</span><span style="color:#815ba4">private</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">ListItr</span> <span style="color:#815ba4">implements</span> ListIterator<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  7</span>    <span style="color:#815ba4">private</span> Node<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> lastReturned<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  8</span>    <span style="color:#815ba4">private</span> Node<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> next<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">  9</span>    <span style="color:#815ba4">private</span> <span style="color:#fec418">int</span> nextIndex<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 10</span>    <span style="color:#815ba4">private</span> <span style="color:#fec418">int</span> expectedModCount <span style="color:#5bc4bf">=</span> modCount<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 11</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 12</span>    ListItr<span style="color:#5bc4bf">(</span><span style="color:#fec418">int</span> index<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 13</span>        <span style="color:#776e71">// assert isPositionIndex(index);
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 14</span><span style="color:#776e71"></span>        next <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>index <span style="color:#5bc4bf">==</span> size<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">?</span> <span style="color:#815ba4">null</span> <span style="color:#5bc4bf">:</span> node<span style="color:#5bc4bf">(</span>index<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 15</span>        nextIndex <span style="color:#5bc4bf">=</span> index<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 16</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 17</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 18</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">boolean</span> <span style="color:#06b6ef">hasNext</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 19</span>        <span style="color:#815ba4">return</span> nextIndex <span style="color:#5bc4bf">&lt;</span> size<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 20</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 21</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 22</span>    <span style="color:#815ba4">public</span> E <span style="color:#06b6ef">next</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 23</span>        checkForComodification<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 24</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(!</span>hasNext<span style="color:#5bc4bf">())</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 25</span>            <span style="color:#815ba4">throw</span> <span style="color:#815ba4">new</span> NoSuchElementException<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 26</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 27</span>        lastReturned <span style="color:#5bc4bf">=</span> next<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 28</span>        next <span style="color:#5bc4bf">=</span> next<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 29</span>        nextIndex<span style="color:#5bc4bf">++;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 30</span>        <span style="color:#815ba4">return</span> lastReturned<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">item</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 31</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 32</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 33</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">boolean</span> <span style="color:#06b6ef">hasPrevious</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 34</span>        <span style="color:#815ba4">return</span> nextIndex <span style="color:#5bc4bf">&gt;</span> 0<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 35</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 36</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 37</span>    <span style="color:#815ba4">public</span> E <span style="color:#06b6ef">previous</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 38</span>        checkForComodification<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 39</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(!</span>hasPrevious<span style="color:#5bc4bf">())</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 40</span>            <span style="color:#815ba4">throw</span> <span style="color:#815ba4">new</span> NoSuchElementException<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 41</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 42</span>        lastReturned <span style="color:#5bc4bf">=</span> next <span style="color:#5bc4bf">=</span> <span style="color:#5bc4bf">(</span>next <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">?</span> last <span style="color:#5bc4bf">:</span> next<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">prev</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 43</span>        nextIndex<span style="color:#5bc4bf">--;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 44</span>        <span style="color:#815ba4">return</span> lastReturned<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">item</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 45</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 46</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 47</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">int</span> <span style="color:#06b6ef">nextIndex</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 48</span>        <span style="color:#815ba4">return</span> nextIndex<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 49</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 50</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 51</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">int</span> <span style="color:#06b6ef">previousIndex</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 52</span>        <span style="color:#815ba4">return</span> nextIndex <span style="color:#5bc4bf">-</span> 1<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 53</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 54</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 55</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">void</span> <span style="color:#06b6ef">remove</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 56</span>        checkForComodification<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 57</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>lastReturned <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 58</span>            <span style="color:#815ba4">throw</span> <span style="color:#815ba4">new</span> IllegalStateException<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 59</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 60</span>        Node<span style="color:#5bc4bf">&lt;</span>E<span style="color:#5bc4bf">&gt;</span> lastNext <span style="color:#5bc4bf">=</span> lastReturned<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 61</span>        unlink<span style="color:#5bc4bf">(</span>lastReturned<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 62</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>next <span style="color:#5bc4bf">==</span> lastReturned<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 63</span>            next <span style="color:#5bc4bf">=</span> lastNext<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 64</span>        <span style="color:#815ba4">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 65</span>            nextIndex<span style="color:#5bc4bf">--;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 66</span>        lastReturned <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 67</span>        expectedModCount<span style="color:#5bc4bf">++;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 68</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 69</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 70</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">void</span> <span style="color:#06b6ef">set</span><span style="color:#5bc4bf">(</span>E e<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 71</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>lastReturned <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 72</span>            <span style="color:#815ba4">throw</span> <span style="color:#815ba4">new</span> IllegalStateException<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 73</span>        checkForComodification<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 74</span>        lastReturned<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">item</span> <span style="color:#5bc4bf">=</span> e<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 75</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 76</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 77</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">void</span> <span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span>E e<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 78</span>        checkForComodification<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 79</span>        lastReturned <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 80</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>next <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 81</span>            linkLast<span style="color:#5bc4bf">(</span>e<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 82</span>        <span style="color:#815ba4">else</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 83</span>            linkBefore<span style="color:#5bc4bf">(</span>e<span style="color:#5bc4bf">,</span> next<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 84</span>        nextIndex<span style="color:#5bc4bf">++;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 85</span>        expectedModCount<span style="color:#5bc4bf">++;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 86</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 87</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 88</span>    <span style="color:#815ba4">public</span> <span style="color:#fec418">void</span> <span style="color:#06b6ef">forEachRemaining</span><span style="color:#5bc4bf">(</span>Consumer<span style="color:#5bc4bf">&lt;?</span> <span style="color:#815ba4">super</span> E<span style="color:#5bc4bf">&gt;</span> action<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 89</span>        Objects<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">requireNonNull</span><span style="color:#5bc4bf">(</span>action<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 90</span>        <span style="color:#815ba4">while</span> <span style="color:#5bc4bf">(</span>modCount <span style="color:#5bc4bf">==</span> expectedModCount <span style="color:#5bc4bf">&amp;&amp;</span> nextIndex <span style="color:#5bc4bf">&lt;</span> size<span style="color:#5bc4bf">)</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 91</span>            action<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">accept</span><span style="color:#5bc4bf">(</span>next<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">item</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 92</span>            lastReturned <span style="color:#5bc4bf">=</span> next<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 93</span>            next <span style="color:#5bc4bf">=</span> next<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 94</span>            nextIndex<span style="color:#5bc4bf">++;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 95</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 96</span>        checkForComodification<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 97</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 98</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 99</span>    <span style="color:#815ba4">final</span> <span style="color:#fec418">void</span> <span style="color:#06b6ef">checkForComodification</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">100</span>        <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>modCount <span style="color:#5bc4bf">!=</span> expectedModCount<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">101</span>            <span style="color:#815ba4">throw</span> <span style="color:#815ba4">new</span> ConcurrentModificationException<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">102</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">103</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>这里需要重点注意的是 modCount 字段，前面在增加和删除元素的时候，都会进行自增操作 modCount，这是因为如果想一边迭代，一边用集合自带的方法进行删除或者新增操作，都会抛出异常。（使用迭代器的增删方法不会抛异常）</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#815ba4">final</span> <span style="color:#fec418">void</span> <span style="color:#06b6ef">checkForComodification</span><span style="color:#5bc4bf">()</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>    <span style="color:#815ba4">if</span> <span style="color:#5bc4bf">(</span>modCount <span style="color:#5bc4bf">!=</span> expectedModCount<span style="color:#5bc4bf">)</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>        <span style="color:#815ba4">throw</span> <span style="color:#815ba4">new</span> ConcurrentModificationException<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>比如：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>LinkedList<span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">&gt;</span> linkedList <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> LinkedList<span style="color:#5bc4bf">&lt;&gt;();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;A&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;B&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;C&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;D&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>Iterator<span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">&gt;</span> listIt <span style="color:#5bc4bf">=</span> linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">listIterator</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#815ba4">while</span><span style="color:#5bc4bf">(</span>listIt<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hasNext</span><span style="color:#5bc4bf">()){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>    System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">print</span><span style="color:#5bc4bf">(</span>listIt<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">()+</span><span style="color:#48b685">&#34; &#34;</span><span style="color:#5bc4bf">);</span>   <span style="color:#776e71">// A B C D
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span style="color:#776e71"></span>    <span style="color:#776e71">// linkedList.remove();    // 此处会抛出异常
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span><span style="color:#776e71"></span>    listIt<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">remove</span><span style="color:#5bc4bf">();</span>           <span style="color:#776e71">// 这样可以进行删除操作
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span style="color:#776e71"></span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>迭代器的另一种形式就是使用 foreach 循环，底层实现也是使用的迭代器：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>LinkedList<span style="color:#5bc4bf">&lt;</span>String<span style="color:#5bc4bf">&gt;</span> linkedList <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> LinkedList<span style="color:#5bc4bf">&lt;&gt;();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;A&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;B&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;C&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;D&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span><span style="color:#815ba4">for</span><span style="color:#5bc4bf">(</span>String str <span style="color:#5bc4bf">:</span> linkedList<span style="color:#5bc4bf">){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span>    System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">print</span><span style="color:#5bc4bf">(</span>str <span style="color:#5bc4bf">+</span> <span style="color:#48b685">&#34;&#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><blockquote>
+<p>迭代器和 for 循环性能差异测试</p>
+</blockquote>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span>LinkedList<span style="color:#5bc4bf">&lt;</span>Integer<span style="color:#5bc4bf">&gt;</span> linkedList <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> LinkedList<span style="color:#5bc4bf">&lt;&gt;();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span><span style="color:#815ba4">for</span><span style="color:#5bc4bf">(</span><span style="color:#fec418">int</span> i <span style="color:#5bc4bf">=</span> 0 <span style="color:#5bc4bf">;</span> i <span style="color:#5bc4bf">&lt;</span> 10000 <span style="color:#5bc4bf">;</span> i<span style="color:#5bc4bf">++){</span>        <span style="color:#776e71">// 向链表中添加一万个元素
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span><span style="color:#776e71"></span>    linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">add</span><span style="color:#5bc4bf">(</span>i<span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span><span style="color:#fec418">long</span> beginTimeFor <span style="color:#5bc4bf">=</span> System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">currentTimeMillis</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span><span style="color:#815ba4">for</span><span style="color:#5bc4bf">(</span><span style="color:#fec418">int</span> i <span style="color:#5bc4bf">=</span> 0 <span style="color:#5bc4bf">;</span> i <span style="color:#5bc4bf">&lt;</span> 10000 <span style="color:#5bc4bf">;</span> i<span style="color:#5bc4bf">++){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>    System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">print</span><span style="color:#5bc4bf">(</span>linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">get</span><span style="color:#5bc4bf">(</span>i<span style="color:#5bc4bf">));</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span><span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span style="color:#fec418">long</span> endTimeFor <span style="color:#5bc4bf">=</span> System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">currentTimeMillis</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">println</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;使用普通for循环遍历10000个元素需要的时间：&#34;</span><span style="color:#5bc4bf">+</span> <span style="color:#5bc4bf">(</span>endTimeFor <span style="color:#5bc4bf">-</span> beginTimeFor<span style="color:#5bc4bf">));</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span style="color:#fec418">long</span> beginTimeIte <span style="color:#5bc4bf">=</span> System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">currentTimeMillis</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>Iterator<span style="color:#5bc4bf">&lt;</span>Integer<span style="color:#5bc4bf">&gt;</span> it <span style="color:#5bc4bf">=</span> linkedList<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">listIterator</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span><span style="color:#815ba4">while</span><span style="color:#5bc4bf">(</span>it<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">hasNext</span><span style="color:#5bc4bf">()){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>    System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">print</span><span style="color:#5bc4bf">(</span>it<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">next</span><span style="color:#5bc4bf">()+</span><span style="color:#48b685">&#34; &#34;</span><span style="color:#5bc4bf">);</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">18</span><span style="color:#fec418">long</span> endTimeIte <span style="color:#5bc4bf">=</span> System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">currentTimeMillis</span><span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">19</span>System<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">out</span><span style="color:#5bc4bf">.</span><span style="color:#06b6ef">println</span><span style="color:#5bc4bf">(</span><span style="color:#48b685">&#34;使用迭代器遍历10000个元素需要的时间：&#34;</span><span style="color:#5bc4bf">+</span> <span style="color:#5bc4bf">(</span>endTimeIte <span style="color:#5bc4bf">-</span> beginTimeIte<span style="color:#5bc4bf">));</span>
+</code></pre></div><p>打印结果：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span>使用普通for循环遍历10000个元素需要的时间<span style="color:#ef6155">：</span>100
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>使用迭代器遍历10000个元素需要的时间<span style="color:#ef6155">：</span>24
+</code></pre></div><p>可以看出当打印10000个元素时，两者的时间大约相差3倍，当元素个数更多时，性能差距将会更大。</p>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/java/" rel="tag">Java</a>
+		</li>
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/source/" rel="tag">source</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Hory avatar" src="/img/gitHubOlder.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Hory</span>
+	</div>
+	<div class="authorbox__description">
+		Contact Me: <a href="mailto:HoryChang@163.com">HoryChang@163.com</a>
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/treemap/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">TreeMap</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/linkedhashmap/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">LinkedHashMap</p>
+		</a>
+	</div>
+</nav>
+
+
+
+		</div>
+		<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://horycloud.github.io/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/concurrenthashmap/">ConcurrentHashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/hashmap/">HashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/hashset/">HashSet</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/linkedhashmap/">LinkedHashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/linkedlist/">LinkedList</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java-collection/">Java Collection</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="Java">Java (7)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source/" title="source">source (7)</a>
+	</div>
+</div>
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:HoryChange@163.com">
+				<svg class="widget-social__link-icon icon icon-mail" width="24" height="24" viewBox="0 0 416 288"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>HoryChange@163.com</span>
+			</a>
+		</div>
+
+		
+	</div>
+</div>
+</aside>
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 DGSP local group.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			<span><a href="/imprint">Imprint and Privacy</a></span>
+		</div>
+		
+<div class="footer__copyright">Donate!</div>
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>
