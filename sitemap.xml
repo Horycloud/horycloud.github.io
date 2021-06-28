@@ -11,6 +11,16 @@
     </url>
     
     <url>
+      <loc>https://horycloud.github.io/tags/design-pattern/</loc>
+      <lastmod>2021-06-28T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+      <loc>https://horycloud.github.io/categories/design-pattern/</loc>
+      <lastmod>2021-06-28T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
       <loc>https://horycloud.github.io/post/hashmap/</loc>
       <lastmod>2021-06-28T00:00:00+00:00</lastmod>
     </url>
@@ -47,6 +57,11 @@
     
     <url>
       <loc>https://horycloud.github.io/post/</loc>
+      <lastmod>2021-06-28T00:00:00+00:00</lastmod>
+    </url>
+    
+    <url>
+      <loc>https://horycloud.github.io/post/singletonpattern/</loc>
       <lastmod>2021-06-28T00:00:00+00:00</lastmod>
     </url>
     

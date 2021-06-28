@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Single Pattern - Hugo DPSG</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+		<meta property="og:title" content="Single Pattern" />
+<meta property="og:description" content="" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://horycloud.github.io/post/singletonpattern/" /><meta property="article:section" content="post" />
+<meta property="article:published_time" content="2021-06-28T00:00:00&#43;00:00" />
+<meta property="article:modified_time" content="2021-06-28T00:00:00&#43;00:00" />
+
+
+		<meta itemprop="name" content="Single Pattern">
+<meta itemprop="description" content=""><meta itemprop="datePublished" content="2021-06-28T00:00:00&#43;00:00" />
+<meta itemprop="dateModified" content="2021-06-28T00:00:00&#43;00:00" />
+<meta itemprop="wordCount" content="323">
+<meta itemprop="keywords" content="Design Pattern," />
+		<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Single Pattern"/>
+<meta name="twitter:description" content=""/>
+
+
+	<link rel="stylesheet" href="/css/style.css">
+
+	<link rel="shortcut icon" href="https://horycloud.github.io/favicon.ico">
+
+	
+		
+</head>
+<body class="body">
+	<header class="header">
+	
+	<div class="logo logo--mixed">
+		<div class="container">
+			<a class="logo__link" href="/" title="HORY BLOG" rel="home">
+				<div class="logo__item logo__imagebox">
+						<img class="logo__img" src="/img/placeholder.png">
+					</div><div class="logo__item logo__text">
+						<div class="logo__title">HORY BLOG</div>
+						<div class="logo__tagline">Welcome to my site</div>
+					</div>
+			</a>
+		</div>
+	</div>
+
+</header>
+
+<nav class="menu">
+	<div class="container">
+		<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+			<span class="menu__btn-title" tabindex="-1">Menu</span>
+		</button>
+		<ul class="menu__list">
+			<li class="menu__item">
+				<a class="menu__link" href="/">
+					
+					<span class="menu__text">Home</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="/about/">
+					
+					<span class="menu__text">About</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://gitee.com/HoryCloud">
+					
+					<span class="menu__text">Gitee</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://github.com/Horycloud">
+					
+					<span class="menu__text">GitHub</span>
+					
+				</a>
+			</li>
+			<li class="menu__item">
+				<a class="menu__link" href="https://blog.csdn.net/weixin_44471490">
+					
+					<span class="menu__text">CSDN</span>
+					
+				</a>
+			</li>
+		</ul>
+	</div>
+</nav>
+
+
+
+	<div class="container wrapper flex">
+		<div class="primary">
+		
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Single Pattern</h1>
+			<div class="post__meta meta"><div class="meta__item-author meta__item">
+	<svg class="meta__icon icon icon-author" width="16" height="16" viewBox="0 0 12 16"><path d="M6 1c2.2 0 3.5 2 3.5 4.5C9.5 7 8.9 8.2 8 9c2.9.8 4 2.5 4 5v1H0v-1c0-2.5 1.1-4.2 4-5-.9-.8-1.5-2-1.5-3.5C2.5 3 3.8 1 6 1z"/></svg><span class="meta__text">Hory</span>
+</div>
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg><time class="meta__text" datetime="2021-06-28T00:00:00Z">28.06.2021</time></div><div class="meta__item-categories meta__item"><svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg><span class="meta__text"><a class="meta__link" href="/categories/design-pattern/" rel="category">Design Pattern</a>
+	</span>
+</div></div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#单例模式简介">单例模式简介</a></li>
+    <li><a href="#懒汉模式">懒汉模式</a></li>
+    <li><a href="#饿汉模式">饿汉模式</a></li>
+    <li><a href="#静态内部类">静态内部类</a></li>
+    <li><a href="#双重构校验锁">双重构校验锁</a></li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<h2 id="单例模式简介">单例模式简介</h2>
+<p>即单实例，只实例出来一个对象。</p>
+<p>一般在创建一些<code>管理器类</code>、<code>工具类</code>的时候，需要用到单例模式，比如之前的 JDBCUtil 类，我们只需要一个实例即可（多个实例也可以实现功能，但是增加了代码量且降低了性能）。</p>
+<p><strong>如何实现单例</strong>：</p>
+<ul>
+<li>将构造方法私有化</li>
+<li>提供一个全局唯一获取该类实例的方法帮助用户获取类的实例</li>
+</ul>
+<p><strong>应用场景</strong>：</p>
+<p>主要被用于一个全局类的对象在多个地方被使用并且对象的状态是全局变化的场景下。</p>
+<ul>
+<li>
+<p>应用程序的日志应用，一般都用单例模式实现，这一般是由于共享的日志文件一直处于打开状态，因为只能有一个实例去操作，否则内容不好追加。</p>
+</li>
+<li>
+<p>数据库连接池的设计一般也是采用单例模式，因为数据库连接是一种数据库资源。数据库软件系统中使用数据库连接池，主要是节省打开或者关闭数据库连接所引起的效率损耗，这种效率上的损耗还是非常昂贵的，因此用单例模式来维护，就可以大大降低这种损耗。</p>
+</li>
+<li>
+<p>多线程的线程池的设计一般也是采用单例模式，这是由于线程池要方便对池中的线程进行控制。</p>
+<p>​</p>
+</li>
+</ul>
+<p><strong>单例模式的优点</strong>：</p>
+<ul>
+<li>单例模式为系统资源的优化提供了很好的思路，频繁创建和销毁对象都会增加系统的资源消耗，而单例模式保障了整个系统只有一个对象能被使用，很好地节约了资源。</li>
+</ul>
+<p><strong>单例模式的写法</strong>：</p>
+<ul>
+<li>懒汉模式（线程安全）</li>
+<li>饿汉模式</li>
+<li>静态内部类</li>
+<li>双重校验锁</li>
+</ul>
+<h2 id="懒汉模式">懒汉模式</h2>
+<p>懒汉模式很简单：</p>
+<p>定义一个私有的静态对象<code>instance</code>，之所以定义<code>instance</code>为静态，是因为静态属性或方法是属于类的，能够很好地保障单例对象的唯一性；</p>
+<p>然后定义一个加锁的静态方法获取该对象，如果该对象为<code>null</code>，则定义一个对象实例并将其赋值给<code>instance</code>，这样下次再获取该对象时便能够直接获取了。</p>
+<p>懒汉模式在获取对象实例时做了<code>加锁操作</code>，因此是线程安全的。</p>
+<p>代码如下：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">public</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">LazySingleton</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>  	<span style="color:#815ba4">private</span> <span style="color:#815ba4">static</span> LazySingleton instance<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>  	<span style="color:#815ba4">private</span> <span style="color:#06b6ef">LazySingleton</span><span style="color:#5bc4bf">(){}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>  	
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>  	<span style="color:#815ba4">public</span> <span style="color:#815ba4">static</span> <span style="color:#815ba4">synchronized</span> LazySingleton <span style="color:#06b6ef">getInstance</span><span style="color:#5bc4bf">(){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>      	<span style="color:#815ba4">if</span><span style="color:#5bc4bf">(</span>instance <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>          	instance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> LazySingleton<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>      	<span style="color:#815ba4">return</span> instance<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><h2 id="饿汉模式">饿汉模式</h2>
+<p>饿汉模式指在类中直接定义全局的静态对象的实例并初始化，然后提供一个方法获取该实例对象。</p>
+<p><strong>懒汉模式和饿汉模式的最大不同在于</strong>：</p>
+<p>懒汉模式在类中定义了单例但是并未实例化，实例化的过程是在获取单例对象的方法中实现的，也就是说，在第一次调用懒汉模式时，该对象一定为空，然后去实例化对象并赋值，这样下次就能直接获取对象了；</p>
+<p>而饿汉模式是在定义单例对象的同时将其实例化的，直接使用便可。也就是说，在饿汉模式下，在<code>Class Loader</code>完成后该类的实例便已经存在于JVM中了。</p>
+<p>代码如下：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">1</span><span style="color:#815ba4">public</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">HungrySingleton</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">2</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">3</span>  	<span style="color:#815ba4">private</span> <span style="color:#815ba4">static</span> HungrySingleton instance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> HungrySingleton<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">4</span>  	
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">5</span>  	<span style="color:#815ba4">private</span> <span style="color:#815ba4">static</span> HungrySingleton <span style="color:#06b6ef">getInstannce</span><span style="color:#5bc4bf">(){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">6</span>      	<span style="color:#815ba4">return</span> instance<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">7</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">8</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><h2 id="静态内部类">静态内部类</h2>
+<p>静态内部类通过在类中定义一个静态内部类，将对象实例的定义和初始化放在内部类中完成，我们在获取对象时要通过静态内部类调用其单例对象。</p>
+<p>之所以这样设计，是因为<code>类的静态内部类在JVM中是唯一的</code>，这很好地保障了单例对象的唯一性。</p>
+<p>代码如下：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">public</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">Singleton</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>  	<span style="color:#815ba4">private</span> <span style="color:#815ba4">static</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">SingletonHolder</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>      	<span style="color:#815ba4">private</span> <span style="color:#815ba4">static</span> <span style="color:#815ba4">final</span> Singleton INSTANCE <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> Singleton<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>  	<span style="color:#815ba4">private</span> <span style="color:#06b6ef">Singleton</span><span style="color:#5bc4bf">(){}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>  	<span style="color:#815ba4">public</span> <span style="color:#815ba4">static</span> <span style="color:#815ba4">final</span> Singleton <span style="color:#06b6ef">getInstance</span><span style="color:#5bc4bf">(){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>      	<span style="color:#815ba4">return</span> SingletonHolder<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">INSTANCE</span><span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><h2 id="双重构校验锁">双重构校验锁</h2>
+<p>在说双重构校验锁之前我们先来看看普通的实现方式：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">public</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">Singleton</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>  	<span style="color:#815ba4">private</span> <span style="color:#815ba4">static</span> Singleton instance<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>  	<span style="color:#815ba4">private</span> <span style="color:#06b6ef">Singleton</span><span style="color:#5bc4bf">(){}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>  	
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>  	<span style="color:#815ba4">public</span> <span style="color:#815ba4">static</span> Singleton <span style="color:#06b6ef">getInstance</span><span style="color:#5bc4bf">(){</span>   <span style="color:#776e71">// 这里没有加锁
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#776e71"></span>      	<span style="color:#815ba4">if</span><span style="color:#5bc4bf">(</span>instance <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>          	instance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> Singleton<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>      	<span style="color:#815ba4">return</span> instance<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>这段代码在多线程的情况下无法正常工作，在多个线程同时调用<code>getInstance()</code>时，由于没有锁，这些线程可能同时去创建对象，或者某个线程会得到一个未完全初始化的对象。</p>
+<p>所以要对<code>getInstance()</code>加锁：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">public</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">Singleton</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>  	<span style="color:#815ba4">private</span> <span style="color:#815ba4">static</span> Singleton instance<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>  	<span style="color:#815ba4">private</span> <span style="color:#06b6ef">Singleton</span><span style="color:#5bc4bf">(){}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>  	
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>  	<span style="color:#815ba4">public</span> <span style="color:#815ba4">static</span> <span style="color:#815ba4">synchronized</span> Singleton <span style="color:#06b6ef">getInstance</span><span style="color:#5bc4bf">(){</span>  <span style="color:#776e71">// 加锁
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span><span style="color:#776e71"></span>      	<span style="color:#815ba4">if</span><span style="color:#5bc4bf">(</span>instance <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>          	instance <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> Singleton<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>      	<span style="color:#815ba4">return</span> instance<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>加锁之后发现，这不就是懒汉模式的写法吗！但是这里有一个问题，懒汉模式虽然能够实现多线程下的单例，但是粗暴地将<code>getInstance()</code>锁住了，这样代价很大，为什么呢？</p>
+<p>因为，只有当第一次调用<code>getInstance()</code>时才需要同步创建对象，创建之后再次调用<code>getInstance()</code>时就只是简单的返回成员变量，而这里是无需同步的，所以没必要对整个方法加锁。</p>
+<p>由于同步一个方法会降低100倍或更高的性能， 每次调用获取和释放锁的开销似乎是可以避免的：一旦初始化完成，获取和释放锁就显得很不必要。</p>
+<p>所以就有了双重校验锁的方式：</p>
+<ul>
+<li>双锁模式指在懒汉模式的基础上做进一步优化，给静态对象的定义加上<code>volatile锁</code>来保障初始化时对象的唯一性，在获取对象时通过<code>synchronized (Singleton.class)</code>给单例类加锁来保障操作的唯一性。</li>
+</ul>
+<p>代码如下：</p>
+<div class="highlight"><pre style="color:#e7e9db;background-color:#2f1e2e;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-java" data-lang="java"><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 1</span><span style="color:#815ba4">public</span> <span style="color:#815ba4">class</span> <span style="color:#fec418">Lock2Singleton</span> <span style="color:#5bc4bf">{</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 2</span>  	
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 3</span>  	<span style="color:#815ba4">private</span> <span style="color:#815ba4">volatile</span> <span style="color:#815ba4">static</span> Lock2Singleton singleton<span style="color:#5bc4bf">;</span>  <span style="color:#776e71">// 1. 对象锁
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 4</span><span style="color:#776e71"></span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 5</span>  	<span style="color:#815ba4">private</span> <span style="color:#06b6ef">Lock2Singleton</span><span style="color:#5bc4bf">(){}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 6</span>  
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 7</span>  	<span style="color:#815ba4">public</span> <span style="color:#815ba4">static</span> Lock2Singleton <span style="color:#06b6ef">getSingleton</span><span style="color:#5bc4bf">(){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 8</span>      	<span style="color:#815ba4">if</span><span style="color:#5bc4bf">(</span>singleton <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f"> 9</span>          	<span style="color:#815ba4">synchronized</span><span style="color:#5bc4bf">(</span>Lock2Singleton<span style="color:#5bc4bf">.</span><span style="color:#06b6ef">class</span><span style="color:#5bc4bf">){</span>        <span style="color:#776e71">// 2. synchronized 方法锁
+</span><span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">10</span><span style="color:#776e71"></span>              	<span style="color:#815ba4">if</span><span style="color:#5bc4bf">(</span>singleton <span style="color:#5bc4bf">==</span> <span style="color:#815ba4">null</span><span style="color:#5bc4bf">){</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">11</span>                  	singleton <span style="color:#5bc4bf">=</span> <span style="color:#815ba4">new</span> Lock2Singleton<span style="color:#5bc4bf">();</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">12</span>                <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">13</span>            <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">14</span>        <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">15</span>      	<span style="color:#815ba4">return</span> singleton<span style="color:#5bc4bf">;</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">16</span>    <span style="color:#5bc4bf">}</span>
+<span style="margin-right:0.4em;padding:0 0.4em 0 0.4em;color:#7f7f7f">17</span><span style="color:#5bc4bf">}</span>
+</code></pre></div><p>这个过程就是：</p>
+<ol>
+<li>检查变量是否被初始化（不去获得锁），如果已被初始化立即返回这个变量；</li>
+<li>获取锁；</li>
+<li>第二次检查变量是否已经被初始化：如果其他线程曾获取过锁，那么变量已被初始化，返回初始化的变量；</li>
+<li>否则，初始化并返回变量。</li>
+</ol>
+<blockquote>
+<p><strong>为什么是双重校验？</strong></p>
+</blockquote>
+<p>这里发现有两个<code>if</code>判断，即<code>双重校验</code>。</p>
+<p>第一次校验：也就是第一个<code>if(singleton==null)</code>，前面说过，这个是为了代码提高代码执行效率，由于单例模式只需要创建一次实例即可，所以当创建了一个实例之后，再次调用<code>getSingleton()</code>就不必要进入同步代码块，不用竞争锁，直接返回前面创建的实例即可。</p>
+<p>第二次校验：也就是第二个<code>if(singleton==null)</code>，这个校验是防止再次创建实例，假如有一种情况，当<code>singleton</code>还未被创建时，线程T1调用<code>getSingleton()</code>，由于第一次判断<code>singleton==null</code>，此时线程T1准备继续执行，但是由于资源被线程T2抢占了，此时T2调用<code>getSingleton()</code>，同样地，由于<code>singleton</code>并没有实例化，T2同样可以通过第一个<code>if</code>，然后继续往下执行，同步代码块，第二个<code>if</code>也通过，然后线程T2创建了一个实例<code>singleton</code>。此时线程T2完成任务，资源又回到线程T1，T1此时也进入同步代码块，如果没有这个第二个<code>if</code>，那么，T1也会创建一个<code>singleton</code>实例，那么，就会出现创建多个实例的情况，但是加上第二个<code>if</code>，就可以完全避免这个多线程导致多次创建实例的问题。</p>
+<p>所以说：<strong>两次校验都必不可少!</strong></p>
+<blockquote>
+<p><strong>为什么给静态对象的定义加上<code>volatile锁</code>？</strong></p>
+</blockquote>
+<p>可以先了解一下<a href="https://blog.csdn.net/weixin_44471490/article/details/107543731">关于Java的volatile关键字</a></p>
+<p>这里的<code>volatile</code>也是必不可少的，它有两个作用。</p>
+<p><strong>第一个作用：防止JVM指令重排，从而保证在多线程下也能正常执行</strong></p>
+<p><code>singleton = new Lock2Singleton()</code> 这句话可以分为三步：</p>
+<ol>
+<li>为<code>singleton</code>分配内存空间；</li>
+<li>初始化<code>singleton</code>；</li>
+<li>将<code>singleton</code>指向分配的内存空间。</li>
+</ol>
+<p>但是由于JVM具有指令重排的特性，执行顺序有可能变成 1→3→2。 指令重排在单线程下不会出现问题，但是在多线程下会导致一个线程获得一个未初始化的实例。</p>
+<p>例如：线程T1执行了1和3，此时T2调用<code>getSingleton()</code>后发现<code>singleton</code>不为空，因此返回<code>singleton</code>， 但是此时的<code>singleton</code>还没有被初始化。</p>
+<p><strong>第二个作用：保证变量在多线程运行时的可见性</strong></p>
+<p>在 JDK1.2 之前，Java的内存模型实现总是从主存（即共享内存）读取变量，是不需要进行特别的注意的。而在当前 的 Java 内存模型下，线程可以把变量保存到本地内存（比如机器的寄存器）中，而不是直接在主存中进行读写。</p>
+<p>这就可能造成，一个线程在主存中修改了一个变量的值，而另外一个线程还继续使用它在寄存器中的变量值的拷贝，造成数据的不一致。 要解决这个问题，就需要把变量声明为<code>volatile</code>，这就指示 JVM，这个变量是不稳定的，每次使用它都到主存中进行读取。</p>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item">
+			<a class="tags__link btn" href="/tags/design-pattern/" rel="tag">Design Pattern</a>
+		</li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Hory avatar" src="/img/gitHubOlder.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Hory</span>
+	</div>
+	<div class="authorbox__description">
+		Contact Me: <a href="mailto:HoryChang@163.com">HoryChang@163.com</a>
+	</div>
+</div>
+
+<nav class="pager flex">
+	<div class="pager__item pager__item--prev">
+		<a class="pager__link" href="/post/treemap/" rel="prev">
+			<span class="pager__subtitle">«&thinsp;Previous</span>
+			<p class="pager__title">TreeMap</p>
+		</a>
+	</div>
+	<div class="pager__item pager__item--next">
+		<a class="pager__link" href="/post/linkedlist/" rel="next">
+			<span class="pager__subtitle">Next&thinsp;»</span>
+			<p class="pager__title">LinkedList</p>
+		</a>
+	</div>
+</nav>
+
+
+
+		</div>
+		<aside class="sidebar"><div class="widget-search widget">
+	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
+		<label>
+			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
+		</label>
+		<input class="widget-search__submit" type="submit" value="Search">
+		<input type="hidden" name="sitesearch" value="https://horycloud.github.io/" />
+	</form>
+</div>
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/post/concurrenthashmap/">ConcurrentHashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/hashmap/">HashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/hashset/">HashSet</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/linkedhashmap/">LinkedHashMap</a></li>
+			<li class="widget__item"><a class="widget__link" href="/post/linkedlist/">LinkedList</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/design-pattern/">Design Pattern</a>
+			</li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/java-collection/">Java Collection</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/design-pattern/" title="Design Pattern">Design Pattern (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/java/" title="Java">Java (7)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/source/" title="source">source (7)</a>
+	</div>
+</div>
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:HoryChange@163.com">
+				<svg class="widget-social__link-icon icon icon-mail" width="24" height="24" viewBox="0 0 416 288"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>HoryChange@163.com</span>
+			</a>
+		</div>
+
+		
+	</div>
+</div>
+</aside>
+	</div>
+	<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2021 DGSP local group.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/pfadfinder-konstanz/hugo-dpsg/" rel="nofollow noopener" target="_blank">DPSG</a> theme.</span>
+			<span><a href="/imprint">Imprint and Privacy</a></span>
+		</div>
+		
+<div class="footer__copyright">Donate!</div>
+
+	</div>
+</footer>
+
+	<script async defer src="/js/menu.js"></script>
+	
+	
+	
+</body>
+</html>

@@ -53,6 +53,15 @@
     </item>
     
     <item>
+      <title>Single Pattern</title>
+      <link>https://horycloud.github.io/post/singletonpattern/</link>
+      <pubDate>Mon, 28 Jun 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://horycloud.github.io/post/singletonpattern/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>TreeMap</title>
       <link>https://horycloud.github.io/post/treemap/</link>
       <pubDate>Mon, 28 Jun 2021 00:00:00 +0000</pubDate>
